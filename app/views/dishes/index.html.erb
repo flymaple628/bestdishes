@@ -1,0 +1,41 @@
+
+	<%=form_for @dish do |f|%>
+	<div class="row">
+		<div class="col-md-4"><%=f.label :name%></div>
+		<div class="col-md-8"><%=f.text_field :name%></div>
+	</div>
+	<div class="row">
+		<div class="col-md-4"><%=f.label :price%></div>
+		<div class="col-md-8"><%=f.number_field :price%></div>
+	</div>
+	<div class="row">
+		<div class="col-md-12"><%=f.label :short_des%></div>
+	</div>
+	<div class="row">
+		<div class="col-md-12"><%=f.text_area :short_des%></div>
+	</div>
+	<div class="row">
+		<div class="col-md-12"><%=f.submit :create%></div>
+	</div>
+
+	<% end %>
+
+<!--form-->
+<div class="row">
+	<div class="col-md-8">resrtaurants_name</div>
+	<div class="col-md-2"></div>
+	<div class="col-md-2"></div>
+</div>
+<% @dishes.each do |f| %>
+<div class="row">
+	<div class="col-md-8"><%=f.name%></div>
+	<div class="col-md-4">
+	<%=f.price%>
+	<%=link_to 'edit',dishes_path(:id=>f.id) %>
+	<%=link_to 'delete',dish_path(:id=>f.id),:method=>'delete' %>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-12"><%=f.short_des%></div>
+</div>
+<% end %>
