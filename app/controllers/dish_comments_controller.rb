@@ -4,6 +4,7 @@ class DishCommentsController < ApplicationController
 
 	#GET /dishes/:id/comments/
 	def index
+
 		@comment=Comment.new
 	end
 

@@ -9,6 +9,7 @@
 		<%=link_to 'salt',dish_comments_path(:order=>'salt') %>
 	</div>
 </div>
+<% if user_signed_in? %>
 <%=form_for @comment,:url=>dish_comments_path do |f|%>
 <div class="row">
 	<div class="col-md-12">
@@ -30,7 +31,7 @@
 		<%=f.submit :create%>
 	</div>
 </div>
-
+<% end %>
 <% end %>
 <% if @comments.count>0 %>
 <% @comments.each do |c|%>
