@@ -18,7 +18,8 @@ class DishesController < ApplicationController
 
 	#POST /dishes/
 	def create
-		@dish=Dish.new(dish_params)
+		@dish=Dish.new(dish_params.merge(:user_id => current_user.id))
+		# render :text=>dish_params.inspect
 		if @dish.save
 			redirect_to dishes_path
 		else
@@ -28,8 +29,8 @@ class DishesController < ApplicationController
 
 	#Patch /dishes/:id/
 	def update
-		if @dish.update
-			redirect_to dishes_path
+		if @dish.update(dish_params)
+			redirect_to dishes_path(:id=>@dish.id)
 		else
 			render :action=>:index
 		end
@@ -48,6 +49,6 @@ class DishesController < ApplicationController
 	end
 
 	def dish_params
-		params.require(:dish).permit(:name,:price,:short_des)
+		params.require(:dish).permit(:name,:price,:short_des,:user_id,:tag_ids=>[])
 	end
 end

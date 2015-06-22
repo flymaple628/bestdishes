@@ -9,6 +9,12 @@
 		<div class="col-md-8"><%=f.number_field :price%></div>
 	</div>
 	<div class="row">
+		<div class="col-md-4"><%=f.label :tag_id%></div>
+		<div class="col-md-8">
+			<%=f.collection_check_boxes(:tag_ids, Tag.all, :id, :name)%>
+		</div>
+	</div>
+	<div class="row">
 		<div class="col-md-12"><%=f.label :short_des%></div>
 	</div>
 	<div class="row">
@@ -28,7 +34,7 @@
 </div>
 <% @dishes.each do |f| %>
 <div class="row">
-	<div class="col-md-8"><%=f.name%></div>
+	<div class="col-md-8"><%=link_to "#{f.name}" ,dish_comments_path(f)%></div>
 	<div class="col-md-4">
 	<%=f.price%>
 	<%=link_to 'edit',dishes_path(:id=>f.id) %>

@@ -9,8 +9,9 @@
 		<%=link_to 'salt',dish_comments_path(:order=>'salt') %>
 	</div>
 </div>
-<% if user_signed_in? %>
-<%=form_for @comment,:url=>dish_comments_path do |f|%>
+<%# if user_signed_in? %>
+<% url=(params[:id])? dish_comment_path(@dish,@comment):dish_comments_path%>
+<%=form_for @comment,:url=>url do |f|%>
 <div class="row">
 	<div class="col-md-12">
 		tasted:<%=f.range_field :tasted ,in: 1..10%>
@@ -32,11 +33,11 @@
 	</div>
 </div>
 <% end %>
-<% end %>
+<%# end %>
 <% if @comments.count>0 %>
 <% @comments.each do |c|%>
 <div class="row">
-	<div class="col-md-2">頭像</div>
+	<div class="col-md-2"><%=c.user_id %></div>
 	<div class="col-md-10">
 		<div class="row">
 			<div class="col-md-12">
@@ -46,6 +47,8 @@
 				bitter:<%=c.bitter%>
 				spicy:<%=c.spicy%>
 				salt:<%=c.salt%>
+				<%= link_to "edit",dish_comments_path(@dish,:id=>c.id) %>
+				<%= link_to "destroy",dish_comment_path(@dish,c),:method=>'delete' %>
 			</div>
 		</div>
 		<div class="row">
