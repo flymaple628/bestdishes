@@ -32,13 +32,15 @@
 	<div class="col-md-4">
 		<%=link_to "name" , dishes_path(:order=>:name)%>
 		<%=link_to "price" , dishes_path(:order=>:price)%>
+		<%=link_to "viewed" , dishes_path(:order=>:viewed)%>
 	</div>
 </div>
 <% @dishes.each do |f| %>
 <div class="row">
 	<div class="col-md-8"><%=link_to "#{f.name}" ,dish_comments_path(f)%></div>
 	<div class="col-md-4">
-	<%=f.price%>
+	$<%=f.price%>
+	viewed:<%=f.viewed%>
 	<%=link_to 'edit',dishes_path(:id=>f.id) %>
 	<%=link_to 'delete',dish_path(:id=>f.id),:method=>'delete' %>
 	</div>

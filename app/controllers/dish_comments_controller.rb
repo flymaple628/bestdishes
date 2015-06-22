@@ -5,11 +5,20 @@ class DishCommentsController < ApplicationController
 	#GET /dishes/:id/comments/
 	def index
 
+		if @dish.viewed.nil?
+			@dish.viewed=1
+		else
+			@dish.viewed+=1
+		end
+		@dish.update_attributes(:viewed=>@dish.viewed)
+		# puts @dish.inspect
+		#@dish.update(@dish)
 		if params[:id]
 			@comment=Comment.find(params[:id])
 		else
 			@comment=Comment.new
 		end
+		# render :text=>@dish.inspect
 	end
 
 
