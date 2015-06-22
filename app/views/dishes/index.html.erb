@@ -29,8 +29,10 @@
 <!--form-->
 <div class="row">
 	<div class="col-md-8">resrtaurants_name</div>
-	<div class="col-md-2"></div>
-	<div class="col-md-2"></div>
+	<div class="col-md-4">
+		<%=link_to "name" , dishes_path(:order=>:name)%>
+		<%=link_to "price" , dishes_path(:order=>:price)%>
+	</div>
 </div>
 <% @dishes.each do |f| %>
 <div class="row">

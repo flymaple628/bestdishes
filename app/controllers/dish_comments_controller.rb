@@ -4,6 +4,7 @@ class DishCommentsController < ApplicationController
 	before_action :comment_one,:only=>[:update,:delete]
 	#GET /dishes/:id/comments/
 	def index
+
 		if params[:id]
 			@comment=Comment.find(params[:id])
 		else
@@ -14,7 +15,7 @@ class DishCommentsController < ApplicationController
 
 	#POST /dishes/:id/comments/
 	def create
-		@comment=@dish.comments.build(comment_params)
+		@comment=@dish.comments.build(comment_params.merge(:user_id => current_user.id))
 		if @comment.save
 			redirect_to dish_comments_path
 		else

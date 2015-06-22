@@ -4,6 +4,7 @@ class DishesController < ApplicationController
 
 	#GET /dishes/
 	def index
+
 		if params[:id]
 			dish_one
 		else
@@ -46,6 +47,13 @@ class DishesController < ApplicationController
 	end
 	def dish_all
 		@dishes=Dish.all
+
+		if ['name','price'].include?params[:order]
+			sort_by=params[:order]
+		else
+			sort_by=:id
+		end
+		@dishes=@dishes.order(sort_by)
 	end
 
 	def dish_params
