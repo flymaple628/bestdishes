@@ -41,8 +41,11 @@
 	<div class="col-md-4">
 	$<%=f.price%>
 	viewed:<%=f.viewed%>
-	<%=link_to 'edit',dishes_path(:id=>f.id) %>
-	<%=link_to 'delete',dish_path(:id=>f.id),:method=>'delete' %>
+	<% if f.user_id==current_user.id%>
+		<%=link_to 'edit',dishes_path(:id=>f.id) %>
+
+		<%=link_to 'delete',dish_path(:id=>f.id),:method=>'delete' %>
+	<% end %>
 	</div>
 </div>
 <div class="row">
