@@ -4,7 +4,6 @@ class DishesController < ApplicationController
 
 	#GET /dishes/
 	def index
-
 		if params[:id]
 			dish_one
 		else
@@ -46,6 +45,7 @@ class DishesController < ApplicationController
 		@dish=Dish.find_by_id(params[:id])
 	end
 	def dish_all
+		@dish_count=Comment.group(:dish_id).count()
 		@dishes=Dish.all
 
 		if ['name','price'].include?params[:order]
