@@ -4,10 +4,12 @@ class DishesController < ApplicationController
 
 	#GET /dishes/
 	def index
-		if params[:id]
-			dish_one
-		else
-			@dish=Dish.new
+		if current_user
+			if params[:id]
+				dish_one
+			else
+				@dish=Dish.new
+			end
 		end
 	end
 
@@ -43,6 +45,11 @@ class DishesController < ApplicationController
 
 	def dish_one
 		@dish=Dish.find_by_id(params[:id])
+		if current_user and @dish.user_id==current_user.id
+			@dish=Dish.find_by_id(params[:id])
+		end
+
+
 	end
 	def dish_all
 		# users = User.joins("LEFT JOIN tickets ON users.id = tickets.user_id").select("users.*, count(tickets.id) as ticket_count").group("users.id")
@@ -62,6 +69,7 @@ class DishesController < ApplicationController
 			sort_by=:id
 		end
 		@dishes=@dishes.order(sort_by)
+		@dishes=@dishes.page(params[:page]).per(10)
 	end
 
 	def dish_params

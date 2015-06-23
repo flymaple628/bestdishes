@@ -9,31 +9,31 @@
 		<%=link_to 'salt',dish_comments_path(:order=>'salt') %>
 	</div>
 </div>
-<%# if user_signed_in? %>
-<% url=(params[:id])? dish_comment_path(@dish,@comment):dish_comments_path%>
-<%=form_for @comment,:url=>url do |f|%>
-<div class="row">
-	<div class="col-md-12">
-		tasted:<%=f.range_field :tasted ,in: 1..10%>
-		acid:<%=f.range_field :acid,in: 1..10%>
-		sweet:<%=f.range_field :sweet,in: 1..10%>
-		bitter:<%=f.range_field :bitter,in: 1..10%>
-		spicy:<%=f.range_field :spicy,in: 1..10%>
-		salt:<%=f.range_field :salt,in: 1..10%>
+<% if current_user %>
+	<% url=(params[:id])? dish_comment_path(@dish,@comment):dish_comments_path%>
+	<%=form_for @comment,:url=>url do |f|%>
+	<div class="row">
+		<div class="col-md-12">
+			tasted:<%=f.range_field :tasted ,in: 1..10%>
+			acid:<%=f.range_field :acid,in: 1..10%>
+			sweet:<%=f.range_field :sweet,in: 1..10%>
+			bitter:<%=f.range_field :bitter,in: 1..10%>
+			spicy:<%=f.range_field :spicy,in: 1..10%>
+			salt:<%=f.range_field :salt,in: 1..10%>
+		</div>
 	</div>
-</div>
-<div class="row">
-	<div class="col-md-12">
-		<%=f.text_area :comment%>
+	<div class="row">
+		<div class="col-md-12">
+			<%=f.text_area :comment%>
+		</div>
 	</div>
-</div>
-<div class="row">
-	<div class="col-md-12">
-		<%=f.submit :create%>
+	<div class="row">
+		<div class="col-md-12">
+			<%=f.submit :create%>
+		</div>
 	</div>
-</div>
+	<% end %>
 <% end %>
-<%# end %>
 <% if @comments.count>0 %>
 <% @comments.each do |c|%>
 <div class="row">
@@ -47,7 +47,7 @@
 				bitter:<%=c.bitter%>
 				spicy:<%=c.spicy%>
 				salt:<%=c.salt%>
-				<% if c.user_id==current_user.id%>
+				<% if current_user and c.user_id==current_user.id%>
 				<%= link_to "edit",dish_comments_path(@dish,:id=>c.id) %>
 				<%= link_to "destroy",dish_comment_path(@dish,c),:method=>'delete' %>
 				<% end %>

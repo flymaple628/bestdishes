@@ -1,4 +1,4 @@
-
+	<% unless @dish.nil? %>
 	<%=form_for @dish do |f|%>
 	<div class="row">
 		<div class="col-md-4"><%=f.label :name%></div>
@@ -25,6 +25,7 @@
 	</div>
 
 	<% end %>
+	<% end %>
 
 <!--form-->
 <div class="row">
@@ -44,7 +45,7 @@
 	$<%=f.price%>
 	viewed:<%=f.viewed%>
 	Count:<%=f.comment_count%>
-	<% if f.user_id==current_user.id%>
+	<% if current_user and f.user_id==current_user.id%>
 		<%=link_to 'edit',dishes_path(:id=>f.id) %>
 		<%=link_to 'delete',dish_path(:id=>f.id),:method=>'delete' %>
 	<% end %>
@@ -54,3 +55,4 @@
 	<div class="col-md-12"><%=f.short_des%></div>
 </div>
 <% end %>
+<div class="col-md-12 text-center"><%= paginate @dishes %></div>

@@ -13,10 +13,12 @@ class DishCommentsController < ApplicationController
 		@dish.update_attributes(:viewed=>@dish.viewed)
 		# puts @dish.inspect
 		#@dish.update(@dish)
-		if params[:id]
-			@comment=Comment.find(params[:id])
-		else
-			@comment=Comment.new
+		if current_user
+			if params[:id]
+				@comment=Comment.find(params[:id])
+			else
+				@comment=Comment.new
+			end
 		end
 		# render :text=>@dish.inspect
 	end
