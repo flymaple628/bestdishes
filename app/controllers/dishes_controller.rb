@@ -45,11 +45,19 @@ class DishesController < ApplicationController
 		@dish=Dish.find_by_id(params[:id])
 	end
 	def dish_all
-		@dish_count=Comment.group(:dish_id).count()
-		@dishes=Dish.all
+		# users = User.joins("LEFT JOIN tickets ON users.id = tickets.user_id").select("users.*, count(tickets.id) as ticket_count").group("users.id")
+		# users.first.ticket_count
 
-		if ['name','price'].include?params[:order]
-			sort_by=params[:order]
+		# @dish_count=Comment.group(:dish_id).count()
+
+		@dishes=Dish.joins("LEFT JOIN comments ON dishes.id=comments.dish_id").select("dishes.*,count(comments.id) as comment_count").group("dishes.id")
+
+		if ['name','price','comment_countd','updated_at'].include?params[:order]
+			if params[:order]=='comment_countd'
+				sort_by=params[:order]+' desc'
+			else
+				sort_by=params[:order]
+			end
 		else
 			sort_by=:id
 		end
