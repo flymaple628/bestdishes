@@ -45,6 +45,9 @@
 	$<%=f.price%>
 	viewed:<%=f.viewed%>
 	Count:<%=f.comment_count%>
+	<% if current_user %>
+	<%=link_to 'faverite',faverite_dishes_path(:dish_id=>f.id),:method=>'post' %>
+	<% end %>
 	<% if current_user and f.user_id==current_user.id%>
 		<%=link_to 'edit',dishes_path(:id=>f.id) %>
 		<%=link_to 'delete',dish_path(:id=>f.id),:method=>'delete' %>

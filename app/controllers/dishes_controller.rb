@@ -17,7 +17,10 @@ class DishesController < ApplicationController
 	def new
 		@dish=Dish.new
 	end
-
+	#GET /dishes/faverite_list
+	def faverite_list
+		@dishes=User.find(1).dishes
+	end
 	#POST /dishes/
 	def create
 		@dish=Dish.new(dish_params.merge(:user_id => current_user.id))
@@ -43,6 +46,18 @@ class DishesController < ApplicationController
 		redirect_to dishes_path
 	end
 
+	#POST /dishes/faverite
+	def faverite
+		if UserDishship.exists?(:dish_id=>params[:dish_id],:user_id=>current_user.id)
+			@dish=UserDishship.where(:dish_id=>params[:dish_id],:user_id=>current_user.id)
+			@dish.delete_all
+		else
+			@dish=UserDishship.new(:dish_id=>params[:dish_id],:user_id=>current_user.id)
+			@dish.save
+		end
+		render :html=>UserDishship.exists?(:dish_id=>params[:dish_id],:user_id=>current_user.id)
+		#redirect_to dishes_path
+	end
 	def dish_one
 		@dish=Dish.find_by_id(params[:id])
 		if current_user and @dish.user_id==current_user.id
@@ -75,4 +90,5 @@ class DishesController < ApplicationController
 	def dish_params
 		params.require(:dish).permit(:name,:price,:short_des,:user_id,:tag_ids=>[])
 	end
+
 end

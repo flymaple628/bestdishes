@@ -4,6 +4,10 @@ Rails.application.routes.draw do
 
   resources :dishes do
     resources :comments,:controller=>'dish_comments'
+    collection do
+        get :faverite_list
+        post :faverite
+    end
   end
 
 
