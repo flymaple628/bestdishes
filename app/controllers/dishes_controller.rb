@@ -19,7 +19,8 @@ class DishesController < ApplicationController
 	end
 	#GET /dishes/faverite_list
 	def faverite_list
-		@dishes=User.find(1).dishes
+		@user=User.find(current_user.id)
+		@dishes=@user.dishes
 	end
 	#POST /dishes/
 	def create
@@ -55,8 +56,8 @@ class DishesController < ApplicationController
 			@dish=UserDishship.new(:dish_id=>params[:dish_id],:user_id=>current_user.id)
 			@dish.save
 		end
-		render :html=>UserDishship.exists?(:dish_id=>params[:dish_id],:user_id=>current_user.id)
-		#redirect_to dishes_path
+		#render :html=>UserDishship.exists?(:dish_id=>params[:dish_id],:user_id=>current_user.id)
+		redirect_to dishes_path
 	end
 	def dish_one
 		@dish=Dish.find_by_id(params[:id])

@@ -1,3 +1,10 @@
-<% @dish.each do |d|%>
-<%=d.name%>
+<div class="row">
+	<div class="col-md-6">name</div>
+	<div class="col-md-6">short_des</div>
+</div>
+<% @dishes.each do |d|%>
+<div class="row">
+	<div class="col-md-6"><%=d.name%></div>
+	<div class="col-md-6"><%=d.short_des%></div>
+</div>
 <% end %>
