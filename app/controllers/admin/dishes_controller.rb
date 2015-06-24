@@ -6,7 +6,7 @@ class Admin::DishesController < ApplicationController
 
 	#GET /dishes/
 	def index
-		@dishes=@dishes.where(:status=>2)
+		#@dishes=@dishes.where(:status=>2)
 
 		if current_user
 			if params[:id]
@@ -21,19 +21,10 @@ class Admin::DishesController < ApplicationController
 	def new
 		@dish=Dish.new
 	end
-	#GET /dishes/faverite_list
-	def faverite_list
-		if params[:id]
-			user_id=params[:id]
-		else
-			user_id=current_user.id
-		end
-		@user=User.find(user_id)
-		@dishes=@user.dishes
-	end
+
 	#GET /dishes/draft
 	def draft
-		@dishes=@dishes.where(:status=>1)
+		#@dishes=@dishes.where(:status=>1)
 		render :action=>:index
 	end
 
@@ -62,25 +53,9 @@ class Admin::DishesController < ApplicationController
 		redirect_to dishes_path
 	end
 
-	#POST /dishes/faverite
-	def faverite
-		if UserDishship.exists?(:dish_id=>params[:dish_id],:user_id=>current_user.id)
-			@dish=UserDishship.where(:dish_id=>params[:dish_id],:user_id=>current_user.id)
-			@dish.delete_all
-		else
-			@dish=UserDishship.new(:dish_id=>params[:dish_id],:user_id=>current_user.id)
-			@dish.save
-		end
-		#render :html=>UserDishship.exists?(:dish_id=>params[:dish_id],:user_id=>current_user.id)
-		redirect_to dishes_path
-	end
+
 	def dish_one
 		@dish=Dish.find_by_id(params[:id])
-		if current_user and @dish.user_id==current_user.id
-			@dish=Dish.find_by_id(params[:id])
-		end
-
-
 	end
 	def dish_all
 		# users = User.joins("LEFT JOIN tickets ON users.id = tickets.user_id").select("users.*, count(tickets.id) as ticket_count").group("users.id")

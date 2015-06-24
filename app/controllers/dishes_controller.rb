@@ -73,7 +73,6 @@ class DishesController < ApplicationController
 		redirect_to dishes_path
 	end
 	def dish_one
-		@dish=Dish.find_by_id(params[:id])
 		if current_user and @dish.user_id==current_user.id
 			@dish=Dish.find_by_id(params[:id])
 		end

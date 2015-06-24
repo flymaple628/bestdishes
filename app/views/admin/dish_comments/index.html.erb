@@ -53,8 +53,10 @@
 				bitter:<%=c.bitter%>
 				spicy:<%=c.spicy%>
 				salt:<%=c.salt%>
+				<% if current_user and c.user_id==current_user.id%>
 				<%= link_to "edit",dish_comments_path(@dish,:id=>c.id) %>
 				<%= link_to "destroy",dish_comment_path(@dish,c),:method=>'delete' %>
+				<% end %>
 			</div>
 		</div>
 		<div class="row">
