@@ -1,9 +1,11 @@
 class DishesController < ApplicationController
 	before_action :dish_one,:only=>[:update,:destroy]
-	before_action :dish_all,:only=>[:index,:update]
+	before_action :dish_all,:only=>[:index,:update,:draft]
 
 	#GET /dishes/
 	def index
+		@dishes=@dishes.where(:status=>2)
+
 		if current_user
 			if params[:id]
 				dish_one
@@ -19,9 +21,20 @@ class DishesController < ApplicationController
 	end
 	#GET /dishes/faverite_list
 	def faverite_list
-		@user=User.find(current_user.id)
+		if params[:id]
+			user_id=params[:id]
+		else
+			user_id=current_user.id
+		end
+		@user=User.find(user_id)
 		@dishes=@user.dishes
 	end
+	#GET /dishes/draft
+	def draft
+		@dishes=@dishes.where(:status=>1)
+		render :action=>:index
+	end
+
 	#POST /dishes/
 	def create
 		@dish=Dish.new(dish_params.merge(:user_id => current_user.id))
@@ -84,12 +97,13 @@ class DishesController < ApplicationController
 		else
 			sort_by=:id
 		end
+
 		@dishes=@dishes.order(sort_by)
 		@dishes=@dishes.page(params[:page]).per(10)
 	end
 
 	def dish_params
-		params.require(:dish).permit(:name,:price,:short_des,:user_id,:tag_ids=>[])
+		params.require(:dish).permit(:name,:price,:short_des,:user_id,:status,:tag_ids=>[])
 	end
 
 end

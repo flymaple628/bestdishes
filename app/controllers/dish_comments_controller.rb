@@ -70,12 +70,12 @@ class DishCommentsController < ApplicationController
 		else
 			sort_by='id desc'
 		end
-
+		@comments=@comments.where(:status=>2)
 		@comments=@comments.order(sort_by)
 		@comments=@comments.page(params[:page]).per(10)
 	end
 
 	def comment_params
-		params.require(:comment).permit(:tasted,:acid,:sweet,:bitter,:spicy,:salt,:comment)
+		params.require(:comment).permit(:tasted,:acid,:sweet,:bitter,:spicy,:salt,:comment,:status)
 	end
 end

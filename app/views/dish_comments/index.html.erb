@@ -25,11 +25,7 @@
 	<div class="row">
 		<div class="col-md-4"><%=f.label :status%></div>
 		<div class="col-md-8">
-			<%= f.select(:status) do %>
-			  <% [['draft', 1], ['posted', 2]].each do |c| -%>
-			    <%= content_tag(:option, c.first, value: c.last) %>
-			  <% end %>
-			<% end %>
+			<%= f.select(:status,[['draft', 1], ['posted', 2]])  %>
 		</div>
 	</div>
 	<div class="row">

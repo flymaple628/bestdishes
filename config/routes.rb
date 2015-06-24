@@ -7,6 +7,11 @@ Rails.application.routes.draw do
     collection do
         get :faverite_list
         post :faverite
+
+        get :draft
+    end
+    member do
+        get :faverite_list
     end
   end
 
