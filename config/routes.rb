@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  devise_for :admins
   devise_for :users
 
   resources :dishes do
@@ -16,6 +17,9 @@ Rails.application.routes.draw do
   end
 
 
+  namespace :admin do
+    resources :dishes
+  end
   #home controllers
   get 'about' =>'homes#about'
   get 'profile/:id' =>'homes#profile'
