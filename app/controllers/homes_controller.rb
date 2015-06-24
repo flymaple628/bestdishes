@@ -12,11 +12,12 @@ class HomesController < ApplicationController
 	def profile
 	 #params[:id]=2
 
-		if User.where(:id=>params[:id])
-			flash[:alert] = "user not exeist"
-			redirect_to '/about'
-		else
+		if User.exists?(:id=>params[:id])
 			@user=User.find(params[:id])
+		else
+			flash[:alert] = "user not exeist"
+			#render :html=>User.find_by_id(params[:id])
+			redirect_to '/about'
 		end
 		@dishes=Dish.where(user_id:params[:id])
 		@comments=Comment.where(user_id:params[:id])

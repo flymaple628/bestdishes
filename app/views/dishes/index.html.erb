@@ -9,6 +9,16 @@
 		<div class="col-md-8"><%=f.number_field :price%></div>
 	</div>
 	<div class="row">
+		<div class="col-md-4"><%=f.label :status%></div>
+		<div class="col-md-8">
+			<%= f.select(:status) do %>
+			  <% [['draft', 1], ['posted', 2]].each do |c| -%>
+			    <%= content_tag(:option, c.first, value: c.last) %>
+			  <% end %>
+			<% end %>
+		</div>
+	</div>
+	<div class="row">
 		<div class="col-md-4"><%=f.label :tag_id%></div>
 		<div class="col-md-8">
 			<%=f.collection_check_boxes(:tag_ids, Tag.all, :id, :name)%>
@@ -21,7 +31,8 @@
 		<div class="col-md-12"><%=f.text_area :short_des%></div>
 	</div>
 	<div class="row">
-		<div class="col-md-12"><%=f.submit :create%></div>
+		<div class="col-md-6"><%=f.submit :submit%></div>
+		<div class="col-md-6"><%=f.submit :draft%></div>
 	</div>
 
 	<% end %>
