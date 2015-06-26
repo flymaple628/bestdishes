@@ -37,7 +37,9 @@ class DishesController < ApplicationController
 
 	#POST /dishes/
 	def create
-		@dish=Dish.new(dish_params.merge(:user_id => current_user.id))
+		#@dish=Dish.new(dish_params.merge(:user_id => current_user.id))
+		@dish=Dish.new
+		@dish.user_id=current_user.id
 		# render :text=>dish_params.inspect
 		if @dish.save
 			redirect_to dishes_path

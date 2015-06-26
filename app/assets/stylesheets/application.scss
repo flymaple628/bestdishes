@@ -1,13 +1,41 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+
+//compoments
+.center{
+	text-align:center;
+}
+
+body{
+	background:url("http://www.deino.sakura.ne.jp/0_souko/Back%20up/0_tex/%8Eg%97p%89%C2%94%5C/paper_parchment02%5B1%5D.jpg");
+}
+
 .main{
 	margin-top:2%;
 	.main-title{
-		background:#FFBB00;
+		border-radius:10px;
+		border:2px solid #ddd;
+		padding-bottom:30px;
+		background:#ddd;
 	}
+	.menu-item{
+		border:2px solid #ccc;
+		margin-top:5px;
+		background:#ddd;
+	}
+	.menu-des{
+		background:#eee;
+		margin: 10px 0 0 10px;
+	}
+	.dish-form{
+		padding-top:10px;
+		background-color:#4e5612;
+	}
+
+
 	.main-list:nth-child(odd){
-		background:#ccc;
+
 	}
 }
 .main{

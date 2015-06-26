@@ -1,11 +1,62 @@
+<div class="main">
+	<div class="row main-title">
+		<div class="col-md-12">
+			<h1 class="center"><%=@dish.id%>test restaurent</h1>
+		</div>
+		<div class="col-md-8">
+			<div class="fb-like" data-href="http://localhost:3000/dishes" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
+		</div>
+		<div class="col-md-4">
+			<%=link_to "name" , dishes_path(:order=>:name)%>
+			<%=link_to "price" , dishes_path(:order=>:price)%>
+			<%=link_to "viewed" , dishes_path(:order=>:viewed)%>
+			<%=link_to "comment" , dishes_path(:order=>:comment_count)%>
+			<%=link_to "last_comment" , dishes_path(:order=>:comment_updated)%>
+		</div>
+	</div>
+	<% @dishes.each do |f| %>
+	<div class="main-list">
+		<div class="menu-item">
+			<div class="row">
+				<div class="col-md-6">
+					<%=link_to "#{f.name}" ,dish_comments_path(f)%>
+				</div>
+				<div class="col-md-2">
+					$<%=f.price%>
+				</div>
+				<div class="col-md-4">
+				<span class="fa fa-comment"><%=f.comment_count%></span>
+				<span class="fa fa-eye"><%=f.viewed%></span>
 
+				<% if current_user %>
+				<%=link_to '',faverite_dishes_path(:dish_id=>f.id),:method=>'post',:class=>'fa fa-heart' %>
+				<% if current_user and f.user_id==current_user.id%>
+					<%=link_to '',dishes_path(:id=>f.id),:class=>'fa fa-penci' %>
+					<%=link_to '',dish_path(:id=>f.id),:method=>'delete',:class=>'fa fa-trash' %>
+					<% end %>
+				<% end %>
+				<%=localize(f.updated_at,:format => '%Y/%m/%d')%>
+				</div>
+			</div>
+			<div class="row menu-des">
+				<div class="col-md-10"><%=f.short_des%></div>
+				<div class="col-md-2">
+
+				</div>
+			</div>
+		</div><!--main-item-->
+	</div>
+	<% end %>
+	<div class="col-md-12 text-center"><%= paginate @dishes %></div>
+</div>
+<div class="dish-form">
 	<% unless @dish.nil? %>
 	<%=form_for @dish do |f|%>
-	<div class="row" class="input-group">
+	<div class="row form-group" >
 		<div class="col-md-4"><%=f.label :name%></div>
 		<div class="col-md-8"><%=f.text_field :name,:class=>"form-control"%></div>
 	</div>
-	<div class="row">
+	<div class="row ">
 		<div class="col-md-4"><%=f.label :price%></div>
 		<div class="col-md-8"><%=f.number_field :price,:class=>"form-control"%></div>
 	</div>
@@ -33,46 +84,9 @@
 
 	<% end %>
 	<% end %>
-
+</div><!--dish-form-->
 <!--form-->
-<div class="main">
-	<div class="row main-title">
-		<div class="col-md-8">resrtaurants_name
-			<div class="fb-like" data-href="https://www.enjoymaple.com" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
-		</div>
-		<div class="col-md-4">
-			<%=link_to "name" , dishes_path(:order=>:name)%>
-			<%=link_to "price" , dishes_path(:order=>:price)%>
-			<%=link_to "viewed" , dishes_path(:order=>:viewed)%>
-			<%=link_to "comment" , dishes_path(:order=>:comment_count)%>
-			<%=link_to "last_comment" , dishes_path(:order=>:comment_updated)%>
-		</div>
-	</div>
-	<% @dishes.each do |f| %>
-	<div class="main-list">
-		<div class="row">
-			<div class="col-md-8"><%=link_to "#{f.name}" ,dish_comments_path(f)%></div>
-			<div class="col-md-4">
-			$<%=f.price%>
-			viewed:<%=f.viewed%>
-			Count:<%=f.comment_count%>
-			<%=localize(f.updated_at,:format => :long)%>
-			<% if current_user %>
-			<%=link_to 'faverite',faverite_dishes_path(:dish_id=>f.id),:method=>'post' %>
-			<% end %>
-			<% if current_user and f.user_id==current_user.id%>
-				<%=link_to 'edit',dishes_path(:id=>f.id) %>
-				<%=link_to 'delete',dish_path(:id=>f.id),:method=>'delete' %>
-			<% end %>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-12"><%=f.short_des%></div>
-		</div>
-	</div>
-	<% end %>
-	<div class="col-md-12 text-center"><%= paginate @dishes %></div>
-</div>
+
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
