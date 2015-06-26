@@ -1,8 +1,20 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
+
 .main{
 	margin-top:2%;
 	.main-title{
-		background:#888;
+		background:#FFBB00;
 	}
+	.main-list:nth-child(odd){
+		background:#ccc;
+	}
+}
+.main{
+
+}
+// input range
+input[type=range] {
+	max-width:10%;
+	display:inline;
 }

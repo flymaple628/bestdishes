@@ -45,7 +45,7 @@
 		<%=link_to "price" , dishes_path(:order=>:price)%>
 		<%=link_to "viewed" , dishes_path(:order=>:viewed)%>
 		<%=link_to "comment" , dishes_path(:order=>:comment_count)%>
-		<%=link_to "update_time" , dishes_path(:order=>:updated_at)%>
+		<%=link_to "last_commet" , dishes_path(:order=>:comment_updated)%>
 	</div>
 </div>
 <% @dishes.each do |f| %>

@@ -16,9 +16,9 @@ class DishesController < ApplicationController
 	end
 
 	#GET /dishes/new
-	def new
-		@dish=Dish.new
-	end
+	# def new
+	# 	@dish=Dish.new
+	# end
 	#GET /dishes/faverite_list
 	def faverite_list
 		if params[:id]
@@ -85,9 +85,9 @@ class DishesController < ApplicationController
 
 		# @dish_count=Comment.group(:dish_id).count()
 
-		@dishes=Dish.joins("LEFT JOIN comments ON dishes.id=comments.dish_id").select("dishes.*,count(comments.id) as comment_count").group("dishes.id")
+		@dishes=Dish.joins("LEFT JOIN comments ON dishes.id=comments.dish_id").select("dishes.*,count(comments.id) as comment_count,max(comments.updated_at) as comment_updated").group("dishes.id")
 
-		if ['name','price','comment_countd','updated_at'].include?params[:order]
+		if ['name','price','comment_countd','comment_updated'].include?params[:order]
 			if params[:order]=='comment_countd'
 				sort_by=params[:order]+' desc'
 			else

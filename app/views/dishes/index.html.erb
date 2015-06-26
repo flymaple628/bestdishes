@@ -1,3 +1,4 @@
+
 	<% unless @dish.nil? %>
 	<%=form_for @dish do |f|%>
 	<div class="row" class="input-group">
@@ -36,34 +37,48 @@
 <!--form-->
 <div class="main">
 	<div class="row main-title">
-		<div class="col-md-8">resrtaurants_name</div>
+		<div class="col-md-8">resrtaurants_name
+			<div class="fb-like" data-href="https://www.enjoymaple.com" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
+		</div>
 		<div class="col-md-4">
 			<%=link_to "name" , dishes_path(:order=>:name)%>
 			<%=link_to "price" , dishes_path(:order=>:price)%>
 			<%=link_to "viewed" , dishes_path(:order=>:viewed)%>
 			<%=link_to "comment" , dishes_path(:order=>:comment_count)%>
-			<%=link_to "update_time" , dishes_path(:order=>:updated_at)%>
+			<%=link_to "last_comment" , dishes_path(:order=>:comment_updated)%>
 		</div>
 	</div>
 	<% @dishes.each do |f| %>
-	<div class="row">
-		<div class="col-md-8"><%=link_to "#{f.name}" ,dish_comments_path(f)%></div>
-		<div class="col-md-4">
-		$<%=f.price%>
-		viewed:<%=f.viewed%>
-		Count:<%=f.comment_count%>
-		<% if current_user %>
-		<%=link_to 'faverite',faverite_dishes_path(:dish_id=>f.id),:method=>'post' %>
-		<% end %>
-		<% if current_user and f.user_id==current_user.id%>
-			<%=link_to 'edit',dishes_path(:id=>f.id) %>
-			<%=link_to 'delete',dish_path(:id=>f.id),:method=>'delete' %>
-		<% end %>
+	<div class="main-list">
+		<div class="row">
+			<div class="col-md-8"><%=link_to "#{f.name}" ,dish_comments_path(f)%></div>
+			<div class="col-md-4">
+			$<%=f.price%>
+			viewed:<%=f.viewed%>
+			Count:<%=f.comment_count%>
+			<%=localize(f.updated_at,:format => :long)%>
+			<% if current_user %>
+			<%=link_to 'faverite',faverite_dishes_path(:dish_id=>f.id),:method=>'post' %>
+			<% end %>
+			<% if current_user and f.user_id==current_user.id%>
+				<%=link_to 'edit',dishes_path(:id=>f.id) %>
+				<%=link_to 'delete',dish_path(:id=>f.id),:method=>'delete' %>
+			<% end %>
+			</div>
 		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-12"><%=f.short_des%></div>
+		<div class="row">
+			<div class="col-md-12"><%=f.short_des%></div>
+		</div>
 	</div>
 	<% end %>
 	<div class="col-md-12 text-center"><%= paginate @dishes %></div>
 </div>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v2.3&appId=356530391028817";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+</script>
