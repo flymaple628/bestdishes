@@ -1,0 +1,14 @@
+<%@tags.each do |t|%>
+<div class="row">
+	<div class="col-md-12"><%=t.name%></div>
+</div>
+<% end %>
+<%=form_for @tag ,:url=>tagpost_admin_dishes_path(:id=>@tag.id),:method=>'post' do |f|%>
+	<div class="row">
+		<div class="col-md-4"><%=f.label :name%></div>
+		<div class="col-md-8"><%=f.text_field :name%>
+	</div>
+	<div class="row">
+		<div class="col-md-6"><%=f.submit :submit%></div>
+	</div>
+<% end %>

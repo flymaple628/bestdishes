@@ -25,6 +25,10 @@ Rails.application.routes.draw do
           post :faverite
 
           get :draft
+
+          get :tag
+
+          post :tagpost
       end
       member do
           get :faverite_list

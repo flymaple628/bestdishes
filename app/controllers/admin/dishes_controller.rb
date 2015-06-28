@@ -28,6 +28,17 @@ class Admin::DishesController < ApplicationController
 		render :action=>:index
 	end
 
+	#GET/dishes/category/:id
+	def tag
+		# @tag=Tag.new
+		if(params[:id].nil?)
+			@tag=Tag.new
+		else
+			@tag=Tag.find(params[:id])
+		end
+		#render :html=>@tag.inspect
+		@tags=Tag.all
+	end
 	#POST /dishes/
 	def create
 		@dish=Dish.new(dish_params.merge(:user_id => current_user.id))
@@ -53,6 +64,18 @@ class Admin::DishesController < ApplicationController
 		redirect_to dishes_path
 	end
 
+	#POST /dishes/tag/
+	def tagpost
+		if(params[:id].nil?)
+		@tag=Tag.new(tag_params)
+		@tag.save
+		else
+			@tag=Tag.find(params[:id])
+			@tag.update(tag_params)
+		end
+		#render :text=>params
+		redirect_to tag_admin_dishes_path
+	end
 
 	def dish_one
 		@dish=Dish.find_by_id(params[:id])
@@ -77,6 +100,10 @@ class Admin::DishesController < ApplicationController
 
 		@dishes=@dishes.order(sort_by)
 		@dishes=@dishes.page(params[:page]).per(10)
+	end
+
+	def tag_params
+		params.require(:tag).permit(:name)
 	end
 
 	def dish_params
