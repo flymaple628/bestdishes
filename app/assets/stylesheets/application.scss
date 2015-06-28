@@ -1,3 +1,7 @@
+
+// Place all the styles related to the dish_comments controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
@@ -34,12 +38,31 @@ body{
 	}
 
 
-	.main-list:nth-child(odd){
-
-	}
 }
-.main{
+.comment-range{
+	background:#fdf;
+	display: block;
+	padding:2px 5px ;
+	margin:5px 0 5px;
+}
+.comment-range input[type="range"]{
+	margin:0 5px;
+}
 
+.main{
+	input,select,textarea{
+		width:100%;
+	}
+	.main-comment{
+		background: #fff;
+	}
+	.comment-form{
+		border:2px solid #ddd;
+		margin:1% ;
+	}
+	.comment-list{
+		margin:2%
+	}
 }
 // input range
 input[type=range] {

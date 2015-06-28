@@ -1,71 +1,97 @@
-<div class="row">
-	<div class="col-md-12">
-		<%=@dish.name%>
-		<%=link_to 'tasted',dish_comments_path(:order=>'tasted') %>
-		<%=link_to 'acid',dish_comments_path(:order=>'acid') %>
-		<%=link_to 'sweet',dish_comments_path(:order=>'sweet') %>
-		<%=link_to 'bitter',dish_comments_path(:order=>'bitter') %>
-		<%=link_to 'spicy',dish_comments_path(:order=>'spicy') %>
-		<%=link_to 'salt',dish_comments_path(:order=>'salt') %>
-	</div>
-</div>
-<% if current_user %>
-	<% url=(params[:id])? dish_comment_path(@dish,@comment):dish_comments_path%>
-	<%=form_for @comment,:url=>url do |f|%>
+<div class="main">
 	<div class="row">
 		<div class="col-md-12">
-			tasted:<%=f.range_field :tasted ,in: 1..10%>
-			acid:<%=f.range_field :acid,in: 1..10%>
-			sweet:<%=f.range_field :sweet,in: 1..10%>
-			bitter:<%=f.range_field :bitter,in: 1..10%>
-			spicy:<%=f.range_field :spicy,in: 1..10%>
-			salt:<%=f.range_field :salt,in: 1..10%>
+			<h2><%=link_to 'restaurent',dishes_path() %></h2>
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-4"><%=f.label :status%></div>
-		<div class="col-md-8">
-			<%= f.select(:status,[['draft', 1], ['posted', 2]])  %>
-		</div>
+		<div class="col-md-12"><h1><%=@dish.name%></h1></div>
 	</div>
 	<div class="row">
 		<div class="col-md-12">
-			<%=f.text_area :comment%>
+			<%=link_to 'tasted',dish_comments_path(:order=>'tasted') %>
+			<%=link_to 'acid',dish_comments_path(:order=>'acid') %>
+			<%=link_to 'sweet',dish_comments_path(:order=>'sweet') %>
+			<%=link_to 'bitter',dish_comments_path(:order=>'bitter') %>
+			<%=link_to 'spicy',dish_comments_path(:order=>'spicy') %>
+			<%=link_to 'salt',dish_comments_path(:order=>'salt') %>
 		</div>
 	</div>
-	<div class="row">
-		<div class="col-md-12">
-			<%=f.submit :create%>
-		</div>
-	</div>
-	<% end %>
-<% end %>
-<% if @comments.count>0 %>
-<% @comments.each do |c|%>
-<div class="row">
-	<div class="col-md-2"><%=c.user_id %></div>
-	<div class="col-md-10">
+	<div class="main-comment">
+		<div class="comment-form">
+		<% if current_user %>
+			<% url=(params[:id])? dish_comment_path(@dish,@comment):dish_comments_path%>
+			<%=form_for @comment,:url=>url do |f|%>
+			<div class="row">
+				<div class="col-md-2">
+					<span class="comment-range">
+					tasted:<%=f.range_field :tasted ,in: 1..10%>
+					acid:<%=f.range_field :acid,in: 1..10%>
+					</span>
+				</div>
+				<div class="col-md-2">
+					<span class="comment-range">
+					sweet:<%=f.range_field :sweet,in: 1..10%>
+					bitter:<%=f.range_field :bitter,in: 1..10%>
+					</span>
+				</div>
+				<div class="col-md-2">
+					<span class="comment-range">
+					spicy:<%=f.range_field :spicy,in: 1..10%>
+					salt:<%=f.range_field :salt,in: 1..10%>
+					</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4"><%=f.label :status%></div>
+				<div class="col-md-8">
+					<%= f.select(:status,[ ['posted', 2],['draft', 1]])  %>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<%=f.label :comment, :comment%>
+					<%=f.text_area :comment%>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<%=f.submit :create%>
+				</div>
+			</div>
+			<% end %>
+		<% end %>
+		</div><!--comment-form-->
+		<div class="comment-list">
+		<% if @comments.count>0 %>
+		<% @comments.each do |c|%>
 		<div class="row">
-			<div class="col-md-12">
-				tasted:<%=c.tasted%>
-				acid:<%=c.acid%>
-				sweet:<%=c.sweet%>
-				bitter:<%=c.bitter%>
-				spicy:<%=c.spicy%>
-				salt:<%=c.salt%>
-				<%= link_to "edit",dish_comments_path(@dish,:id=>c.id) %>
-				<%= link_to "destroy",dish_comment_path(@dish,c),:method=>'delete' %>
+			<div class="col-md-2"><%=c.user_id %></div>
+			<div class="col-md-10">
+				<div class="row">
+					<div class="col-md-12">
+						tasted:<%=c.tasted%>
+						acid:<%=c.acid%>
+						sweet:<%=c.sweet%>
+						bitter:<%=c.bitter%>
+						spicy:<%=c.spicy%>
+						salt:<%=c.salt%>
+						<%= link_to "edit",dish_comments_path(@dish,:id=>c.id) %>
+						<%= link_to "destroy",dish_comment_path(@dish,c),:method=>'delete' %>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<%=c.comment%>
+					</div>
+				</div>
 			</div>
 		</div>
+		<% end %>
+		<% end %>
+		</div><!--comment-list-->
 		<div class="row">
-			<div class="col-md-12">
-				<%=c.comment%>
-			</div>
+			<div class="col-md-12 text-center"><%= paginate @comments %></div>
 		</div>
 	</div>
-</div>
-<% end %>
-<% end %>
-<div class="row">
-	<div class="col-md-12 text-center"><%= paginate @comments %></div>
 </div>

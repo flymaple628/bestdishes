@@ -18,6 +18,7 @@ Rails.application.routes.draw do
 
 
   namespace :admin do
+    resources :tags
     resources :dishes do
       resources :comments,:controller=>'dish_comments'
       collection do
@@ -25,13 +26,10 @@ Rails.application.routes.draw do
           post :faverite
 
           get :draft
-
-          get :tag
-
-          post :tagpost
       end
       member do
           get :faverite_list
+
       end
     end
   end

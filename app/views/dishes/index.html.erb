@@ -14,32 +14,34 @@
 			<%=link_to "last_comment" , dishes_path(:order=>:comment_updated)%>
 		</div>
 	</div>
-	<% @dishes.each do |f| %>
+	<% @dishes.each do |d| %>
 	<div class="main-list">
 		<div class="menu-item">
 			<div class="row">
 				<div class="col-md-6">
-					<%=link_to "#{f.name}" ,dish_comments_path(f)%>
+					<%=link_to "#{d.name}" ,dish_comments_path(d)%>
 				</div>
 				<div class="col-md-2">
-					$<%=f.price%>
+					$<%=d.price%>
 				</div>
 				<div class="col-md-4">
-				<span class="fa fa-comment"><%=f.comment_count%></span>
-				<span class="fa fa-eye"><%=f.viewed%></span>
+				<span class="fa fa-comment"><%=d.comment_count%></span>
+				<span class="fa fa-eye"><%=d.viewed%></span>
 
 				<% if current_user %>
-				<%=link_to '',faverite_dishes_path(:dish_id=>f.id),:method=>'post',:class=>'fa fa-heart' %>
-				<% if current_user and f.user_id==current_user.id%>
-					<%=link_to '',dishes_path(:id=>f.id),:class=>'fa fa-penci' %>
-					<%=link_to '',dish_path(:id=>f.id),:method=>'delete',:class=>'fa fa-trash' %>
+				<%=link_to '',faverite_dishes_path(:dish_id=>d.id),:method=>'post',:class=>'fa fa-heart' %>
+				<% if current_user and d.user_id==current_user.id%>
+					<%=link_to '',dishes_path(:id=>d.id),:class=>'fa fa-penci' %>
+					<% end %>
+					<% if (current_user and d.user_id==current_user.id) or admin_signed_in?%>
+					<%=link_to '',dish_path(:id=>d.id),:method=>'delete',:class=>'fa fa-trash' %>
 					<% end %>
 				<% end %>
-				<%=localize(f.updated_at,:format => '%Y/%m/%d')%>
+				<%=localize(d.updated_at,:format => '%Y/%m/%d')%>
 				</div>
 			</div>
 			<div class="row menu-des">
-				<div class="col-md-10"><%=f.short_des%></div>
+				<div class="col-md-10"><%=d.short_des%></div>
 				<div class="col-md-2">
 
 				</div>

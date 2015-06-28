@@ -75,11 +75,9 @@ class DishesController < ApplicationController
 		redirect_to dishes_path
 	end
 	def dish_one
-		if current_user and @dish.user_id==current_user.id
+		if current_user or current_admin
 			@dish=Dish.find_by_id(params[:id])
 		end
-
-
 	end
 	def dish_all
 		# users = User.joins("LEFT JOIN tickets ON users.id = tickets.user_id").select("users.*, count(tickets.id) as ticket_count").group("users.id")

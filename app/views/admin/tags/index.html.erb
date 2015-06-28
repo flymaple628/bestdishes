@@ -1,0 +1,21 @@
+<%@tags.each do |t|%>
+<div class="row">
+	<div class="col-md-12">
+	<%=t.name%>
+		<%=link_to '',admin_tags_path(:id=>t.id),:class=>'fa fa-pencil' %>
+		<%=link_to '',admin_tag_path(:id=>t.id),:method=>'delete',:class=>'fa fa-trash' %>
+	</div>
+</div>
+<% end %>
+<% url=(@tag.id)? admin_tag_path(@tag):admin_tags_path%>
+<%=form_for @tag ,:url=>url do |t|%>
+	<div class="row">
+		<div class="col-md-4"><%=t.label :name%></div>
+		<div class="col-md-8">
+		<%=t.text_field :name%>
+
+		</div>
+	<div class="row">
+		<div class="col-md-6"><%=t.submit :submit%></div>
+	</div>
+<% end %>
