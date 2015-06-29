@@ -15,10 +15,7 @@ class DishesController < ApplicationController
 		end
 	end
 
-	#GET /dishes/new
-	# def new
-	# 	@dish=Dish.new
-	# end
+
 	#GET /dishes/faverite_list
 	def faverite_list
 		if params[:id]
@@ -38,9 +35,7 @@ class DishesController < ApplicationController
 	#POST /dishes/
 	def create
 		@dish=Dish.new(dish_params.merge(:user_id => current_user.id))
-		#@dish=Dish.new
-		#@dish[:user_id]=current_user.id
-		# render :text=>dish_params.inspect
+
 		if @dish.save
 			redirect_to dishes_path
 		else
@@ -71,7 +66,7 @@ class DishesController < ApplicationController
 			@dish=UserDishship.new(:dish_id=>params[:dish_id],:user_id=>current_user.id)
 			@dish.save
 		end
-		#render :html=>UserDishship.exists?(:dish_id=>params[:dish_id],:user_id=>current_user.id)
+
 		redirect_to dishes_path
 	end
 	def dish_one
@@ -80,10 +75,6 @@ class DishesController < ApplicationController
 		end
 	end
 	def dish_all
-		# users = User.joins("LEFT JOIN tickets ON users.id = tickets.user_id").select("users.*, count(tickets.id) as ticket_count").group("users.id")
-		# users.first.ticket_count
-
-		# @dish_count=Comment.group(:dish_id).count()
 
 		@dishes=Dish.joins("LEFT JOIN comments ON dishes.id=comments.dish_id").select("dishes.*,count(comments.id) as comment_count,max(comments.updated_at) as comment_updated").group("dishes.id")
 

@@ -6,7 +6,7 @@ class Admin::DishesController < ApplicationController
 
 	#GET /dishes/
 	def index
-		#@dishes=@dishes.where(:status=>2)
+
 
 		if current_user
 			if params[:id]
@@ -24,7 +24,7 @@ class Admin::DishesController < ApplicationController
 
 	#GET /dishes/draft
 	def draft
-		#@dishes=@dishes.where(:status=>1)
+
 		render :action=>:index
 	end
 
@@ -32,7 +32,7 @@ class Admin::DishesController < ApplicationController
 	#POST /dishes/
 	def create
 		@dish=Dish.new(dish_params.merge(:user_id => current_user.id))
-		# render :text=>dish_params.inspect
+
 		if @dish.save
 			redirect_to admin_dishes_path
 		else
@@ -61,10 +61,6 @@ class Admin::DishesController < ApplicationController
 		@dish=Dish.find_by_id(params[:id])
 	end
 	def dish_all
-		# users = User.joins("LEFT JOIN tickets ON users.id = tickets.user_id").select("users.*, count(tickets.id) as ticket_count").group("users.id")
-		# users.first.ticket_count
-
-		# @dish_count=Comment.group(:dish_id).count()
 
 		@dishes=Dish.joins("LEFT JOIN comments ON dishes.id=comments.dish_id").select("dishes.*,count(comments.id) as comment_count").group("dishes.id")
 

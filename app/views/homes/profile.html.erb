@@ -24,7 +24,7 @@
 </div>
 <% @dishes.each do |d|%>
 <div class="row">
-	<div class="col-md-12"><%=d.name%><%#=link_to d.name dishes_path%></div>
+	<div class="col-md-12"><%=d.name%></div>
 </div>
 <% end %>
 <div class="row">
@@ -32,7 +32,6 @@
 </div>
 <% @comments.each do |c|%>
 <div class="row">
-	<div class="col-md-12"><%=c.comment%><%#=link_to c.comment dish_comments_path(:dish_id=>c.dish_id,:id=>c.id)%>
-	</div>
+	<div class="col-md-12"><%=c.comment%></div>
 </div>
 <% end %>

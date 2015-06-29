@@ -14,7 +14,7 @@ class Admin::TagsController < ApplicationController
 	#POST /admin/tags/
 	def create
 		#####
-		@tag=Tag.new(:name=>params[:tag][:name])
+		@tag=Tag.new(tag_params)
 		@tag.save()
 		#render :text=>params
 		redirect_to admin_tags_path
@@ -22,7 +22,8 @@ class Admin::TagsController < ApplicationController
 	#PATCH /admin/tags/:id
 	def update
 		@tag=Tag.find(params[:id])
-		@tag.update({:id=>params[:id],:name=>params[:tag][:name]})
+		@tag.update(tag_params)
+
 		redirect_to admin_tags_path
 	end
 	#DELETE /admin/tags/:id
@@ -39,4 +40,7 @@ class Admin::TagsController < ApplicationController
 		end
 	end
 
+	def tag_params
+			params.require(:tag).permit(:name)
+	end
 end

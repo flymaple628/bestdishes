@@ -7,8 +7,8 @@
 	</div>
 </div>
 <% end %>
-<% url=(@tag.id)? admin_tag_path(@tag):admin_tags_path%>
-<%=form_for @tag ,:url=>url do |f|%>
+
+<%=form_for [:admin,@tag]  do |f|%>
 	<div class="row">
 		<div class="col-md-4"><%=f.label :name%></div>
 		<div class="col-md-8">

@@ -11,8 +11,7 @@ class DishCommentsController < ApplicationController
 			@dish.viewed+=1
 		end
 		@dish.update_attributes(:viewed=>@dish.viewed)
-		# puts @dish.inspect
-		#@dish.update(@dish)
+
 		if current_user
 			if params[:id]
 				@comment=Comment.find(params[:id])
@@ -20,7 +19,7 @@ class DishCommentsController < ApplicationController
 				@comment=Comment.new
 			end
 		end
-		# render :text=>@dish.inspect
+
 	end
 
 
