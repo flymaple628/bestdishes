@@ -31,7 +31,7 @@ class DishesController < ApplicationController
 	end
 	#GET /dishes/draft
 	def draft
-		@dishes=@dishes.where(:status=>1)
+		@dishes=@dishes.where(:status=>1,:user_id=>current_user.id)
 		render :action=>:index
 	end
 
