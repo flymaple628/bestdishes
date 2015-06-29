@@ -18,6 +18,8 @@ gem 'kaminari'
 #rigister
 gem 'devise'
 
+gem 'omniauth-facebook'
+
 gem 'bootstrap-sass', '~> 3.3.4'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
