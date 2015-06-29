@@ -1,11 +1,11 @@
 <div class="row">
 	<div class="col-md-12"><a href="./">bestdish</a></div>
-	<div class="col-md-12">
-		<%=text_field_tag 'name'%>
-		<%=button_tag(type: 'submit') do
-  		content_tag(:strong, 'Search')
-		end%>
+
+	<div class="col-md-12"><%= link_to "all_dishes", dishes_path() %>
 	</div>
-	<div class="col-md-12"><%= link_to "all_dishes", dishes_path() %></div>
-	<div class="col-md-12"><a href="">TAGS</a></div>
+	<div class="col-md-12"><%= link_to "faverite", faverite_list_dishes_path() %>
+	</div>
+	<div class="col-md-12"><%= link_to "draft", draft_dishes_path() %>
+	</div>
+
 </div>

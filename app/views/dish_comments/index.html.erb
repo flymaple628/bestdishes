@@ -23,19 +23,18 @@
 			<% url=(params[:id])? dish_comment_path(@dish,@comment):dish_comments_path%>
 			<%=form_for @comment,:url=>url do |f|%>
 			<div class="row">
-				<div class="col-md-2">
+				<div class="col-md-4">
 					<span class="comment-range">
-					tasted:<%=f.range_field :tasted ,in: 1..10%>
-					acid:<%=f.range_field :acid,in: 1..10%>
+					tasted:<%=f.range_field :tasted ,in: 1..10%>acid:<%=f.range_field :acid,in: 1..10%>
 					</span>
 				</div>
-				<div class="col-md-2">
+				<div class="col-md-4">
 					<span class="comment-range">
 					sweet:<%=f.range_field :sweet,in: 1..10%>
 					bitter:<%=f.range_field :bitter,in: 1..10%>
 					</span>
 				</div>
-				<div class="col-md-2">
+				<div class="col-md-4">
 					<span class="comment-range">
 					spicy:<%=f.range_field :spicy,in: 1..10%>
 					salt:<%=f.range_field :salt,in: 1..10%>

@@ -22,15 +22,9 @@ Rails.application.routes.draw do
     resources :dishes do
       resources :comments,:controller=>'dish_comments'
       collection do
-          get :faverite_list
-          post :faverite
-
           get :draft
       end
-      member do
-          get :faverite_list
 
-      end
     end
   end
   #home controllers

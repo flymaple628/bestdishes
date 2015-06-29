@@ -67,7 +67,7 @@ class DishesController < ApplicationController
 			@dish.save
 		end
 
-		redirect_to dishes_path
+		redirect_to(:back)
 	end
 	def dish_one
 		if current_user or current_admin
