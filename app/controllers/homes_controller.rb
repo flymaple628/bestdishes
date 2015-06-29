@@ -21,8 +21,8 @@ class HomesController < ApplicationController
 		end
 		@dishes=Dish.where(user_id:params[:id])
 		@comments=Comment.where(user_id:params[:id])
-		#ender :html=>@user.inspect
-		#render :html=>User.find_by_id(params[:id]).inspect
+		#@comments=@dishes.comm.where(user_id:params[:id])
+
 	end
 
 	def profile_edit
