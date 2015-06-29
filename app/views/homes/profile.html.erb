@@ -8,6 +8,18 @@
 	</div>
 </div>
 <div class="row">
+	<div class="col-md-12">
+		<% if current_user and d.user_id==current_user.id%>
+		<%=form_for @user, :url=>"#{@user.id}",:method=>'patch',:action=>'profile_edit' do |f| %>
+		<%=f.text_area :description%>
+		<%=f.submit%>
+		<% end %>
+		<% else %>
+		<%=@user.description%>
+		<% end %>
+	</div>
+</div>
+<div class="row">
 	<div class="col-md-12">文章</div>
 </div>
 <% @dishes.each do |d|%>

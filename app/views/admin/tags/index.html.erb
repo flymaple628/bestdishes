@@ -8,14 +8,14 @@
 </div>
 <% end %>
 <% url=(@tag.id)? admin_tag_path(@tag):admin_tags_path%>
-<%=form_for @tag ,:url=>url do |t|%>
+<%=form_for @tag ,:url=>url do |f|%>
 	<div class="row">
-		<div class="col-md-4"><%=t.label :name%></div>
+		<div class="col-md-4"><%=f.label :name%></div>
 		<div class="col-md-8">
-		<%=t.text_field :name%>
+		<%=f.text_field :name%>
 
 		</div>
 	<div class="row">
-		<div class="col-md-6"><%=t.submit :submit%></div>
+		<div class="col-md-6"><%=f.submit :submit%></div>
 	</div>
 <% end %>

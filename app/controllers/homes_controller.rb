@@ -16,11 +16,22 @@ class HomesController < ApplicationController
 			@user=User.find(params[:id])
 		else
 			flash[:alert] = "user not exeist"
-			#render :html=>User.find_by_id(params[:id])
+
 			redirect_to '/about'
 		end
 		@dishes=Dish.where(user_id:params[:id])
 		@comments=Comment.where(user_id:params[:id])
-		#render :text=>@dishes.inspect
+		#ender :html=>@user.inspect
+		#render :html=>User.find_by_id(params[:id]).inspect
+	end
+
+	def profile_edit
+		@user=User.find(params[:id])
+		@user.update(user_params)
+		redirect_to "/profile/#{params[:id]}"
+	end
+
+	def user_params
+		params.require(:user).permit(:description)
 	end
 end

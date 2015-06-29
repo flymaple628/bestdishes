@@ -36,6 +36,8 @@ Rails.application.routes.draw do
   #home controllers
   get 'about' =>'homes#about'
   get 'profile/:id' =>'homes#profile'
+
+  patch 'profile/:id' =>'homes#profile_edit'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
