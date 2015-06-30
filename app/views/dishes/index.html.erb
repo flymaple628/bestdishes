@@ -29,7 +29,11 @@
 				<span class="fa fa-eye"><%=d.viewed%></span>
 
 				<% if current_user %>
-				<%=link_to '',faverite_dishes_path(:dish_id=>d.id),:method=>'post',:class=>'fa fa-heart' %>
+					<% if d.user_dishships.empty?%>
+						<p class='fa fa-heart-o faverite' value="<%=d.id%>"></p>
+					<% else %>
+						<p class='fa fa-heart faverite' value="<%=d.id%>"></p>
+					<% end %>
 				<% if current_user and d.user_id==current_user.id%>
 					<%=link_to '',dishes_path(:id=>d.id),:class=>'fa fa-penci' %>
 					<% end %>
@@ -97,4 +101,23 @@
   js.src = "//connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v2.3&appId=356530391028817";
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
+</script>
+<script type="text/javascript">
+
+$(".faverite").click(function() {
+	var id=$(this).attr('value');
+ 	$.get( "/dishes/faverite/", { dish_id: id } )
+	 	.done(function( data ) {
+	 		console.log()
+
+	    if(data.status=="faverite"){
+	    	$(this).parents('.faverite').removeClass('fa-heart-o');
+	    	$(this).closest('.faverite').addClass('fa-heart');
+	    }else{
+	    	$(this).closest('.faverite').removeClass('fa-heart');
+	    	$(this).closest('.faverite').addClass('fa-heart-o');
+	    }
+	  });
+});
+
 </script>

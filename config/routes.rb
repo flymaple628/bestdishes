@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     resources :comments,:controller=>'dish_comments'
     collection do
         get :faverite_list
-        post :faverite
+        get :faverite
 
         get :draft
     end

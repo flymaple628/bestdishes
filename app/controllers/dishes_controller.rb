@@ -62,12 +62,15 @@ class DishesController < ApplicationController
 		if UserDishship.exists?(:dish_id=>params[:dish_id],:user_id=>current_user.id)
 			@dish=UserDishship.where(:dish_id=>params[:dish_id],:user_id=>current_user.id)
 			@dish.delete_all
+			render json:{ "status": 'unfaverite'}
+
 		else
 			@dish=UserDishship.new(:dish_id=>params[:dish_id],:user_id=>current_user.id)
 			@dish.save
+			render json:{ "status": 'faverite'}
 		end
 
-		redirect_to(:back)
+		#redirect_to(:back)
 	end
 	def dish_one
 		if current_user or current_admin
