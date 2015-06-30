@@ -64,6 +64,7 @@
 		<div class="comment-list">
 		<% if @comments.count>0 %>
 		<% @comments.each do |c|%>
+		<div id="item-list<%=c.id%>">
 		<div class="row">
 			<div class="col-md-2"><%=c.dish.name %></div>
 			<div class="col-md-10">
@@ -76,7 +77,8 @@
 						spicy:<%=c.spicy%>
 						salt:<%=c.salt%>
 						<%= link_to "edit",dish_comments_path(@dish,:id=>c.id) %>
-						<%= link_to "destroy",dish_comment_path(@dish,c),:method=>'delete' %>
+						<%#= link_to "destroy",dish_comment_path(@dish,c),:method=>'delete',:class=>"delete" %>
+						<a href="?dish_id=<%=@dish.id%>&id=<%=c.id%>">destroy</a>
 					</div>
 				</div>
 				<div class="row">
@@ -86,6 +88,7 @@
 				</div>
 			</div>
 		</div>
+		</div>
 		<% end %>
 		<% end %>
 		</div><!--comment-list-->
@@ -94,3 +97,43 @@
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
+
+	$("a").click(function(e) {
+		  var strUrl = $(this).attr('href');
+		  var getPara, ParaVal;
+		  var aryPara = [];
+
+		  if (strUrl.indexOf("?") != -1) {
+		    var getSearch = strUrl.split("?");
+		    getPara = getSearch[1].split("&");
+		    for (i = 0; i < getPara.length; i++) {
+		      ParaVal = getPara[i].split("=");
+		      aryPara.push(ParaVal[0]);
+		      aryPara[ParaVal[0]] = ParaVal[1];
+		    }
+		    console.log(aryPara);
+		  }
+
+		/* Act on the event */
+		e.preventDefault();
+			var url = $(this).attr('href').split("/");
+		console.log(strUrl);
+
+			$.ajax({
+	    url: '/dishes/'+aryPara['dish_id']+'/comments/'+aryPara['id'],
+	    type: 'POST',
+	    data: {
+	      //user_name: $('#user_name').val()
+	      '_method': 'delete'
+	    },
+	    error: function(xhr) {
+	      alert('Ajax request 發生錯誤');
+	    },
+	    success: function(response) {
+	    	//alert('Ajax request success');
+				$("#item-list"+aryPara['id']).html("");
+	    }
+	  });
+	});
+</script>

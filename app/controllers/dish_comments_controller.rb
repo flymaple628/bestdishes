@@ -42,6 +42,11 @@ class DishCommentsController < ApplicationController
 		end
 	end
 
+	def destroy
+		@dish.comments.find(params[:id]).destroy
+		#render :html=>@dish.comments.inspect
+		redirect_to :back
+	end
 
 	def dish_one
 		@dish=Dish.find(params[:dish_id])
