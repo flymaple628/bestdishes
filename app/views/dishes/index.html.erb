@@ -35,7 +35,7 @@
 						<p class='fa fa-heart faverite' value="<%=d.id%>"></p>
 					<% end %>
 				<% if current_user and d.user_id==current_user.id%>
-					<%=link_to '',dishes_path(:id=>d.id),:class=>'fa fa-penci' %>
+					<%=link_to '',dishes_path(:id=>d.id),:class=>'fa fa-pencil' %>
 					<% end %>
 					<% if (current_user and d.user_id==current_user.id) or admin_signed_in?%>
 					<%=link_to '',dish_path(:id=>d.id),:method=>'delete',:class=>'fa fa-trash' %>
@@ -79,6 +79,13 @@
 		<div class="col-md-8">
 			<%=f.collection_check_boxes(:tag_ids, Tag.all, :id, :name,{:class=>'checkbox-inline'},{:class=>'checkbox_inline'})%>
 		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-4"><%=f.label :tag_id%></div>
+		<div class="col-md-8"><%= f.file_field :realpic %>
+			<% if @dish.realpic.exists?%>
+			<%=check_box_tag "_remove_reailpic","1"%>刪除照片</div>
+			<% end %>
 	</div>
 	<div class="row">
 		<div class="col-md-4"><%=f.label :short_des%></div>

@@ -45,6 +45,9 @@ class DishesController < ApplicationController
 
 	#Patch /dishes/:id/
 	def update
+		if params[:_remove_reailpic]=='1'
+			@dish.realpic=nil
+		end
 		if @dish.update(dish_params)
 			redirect_to dishes_path(:id=>@dish.id)
 		else
@@ -96,7 +99,7 @@ class DishesController < ApplicationController
 	end
 
 	def dish_params
-		params.require(:dish).permit(:name,:price,:short_des,:user_id,:status,:tag_ids=>[])
+		params.require(:dish).permit(:name,:price,:short_des,:user_id,:status,:realpic,:tag_ids=>[])
 	end
 
 end

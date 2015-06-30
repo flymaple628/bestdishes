@@ -9,6 +9,15 @@
 	</div>
 	<div class="row">
 		<div class="col-md-12">
+			<% if @dish.realpic.exists?%>
+				<%= image_tag(@dish.realpic.url(:medium))%>
+			<% else%>
+				none
+			<% end %>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
 			<%=link_to 'tasted',dish_comments_path(:order=>'tasted') %>
 			<%=link_to 'acid',dish_comments_path(:order=>'acid') %>
 			<%=link_to 'sweet',dish_comments_path(:order=>'sweet') %>

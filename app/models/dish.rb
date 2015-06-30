@@ -5,4 +5,7 @@ class Dish < ActiveRecord::Base
 	has_many :tags ,:through=>:dish_tagsships
 	has_many :user_dishships
 	has_many :users ,:through=>:user_dishships
+
+	has_attached_file :realpic, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/:style/missing.png"
+  validates_attachment_content_type :realpic, :content_type => /\Aimage\/.*\Z/
 end
