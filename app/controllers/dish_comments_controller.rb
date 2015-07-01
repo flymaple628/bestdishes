@@ -1,6 +1,6 @@
 class DishCommentsController < ApplicationController
 
-	before_action :authenticate_user!
+	before_action :authenticate_user!,:except=>[:index]
 
 	before_action :dish_one
 	before_action :comment_all,:only=>[:index]

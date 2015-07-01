@@ -29,11 +29,10 @@
 				<span class="fa fa-eye"><%=d.viewed%></span>
 
 				<% if current_user %>
-
 					<% if current_user.user_dishships.exists?( :dish => d ) %>
-						<p class='fa fa-heart-o faverite' value="<%=d.id%>"></p>
+						<p class='fa fa-heart faverite' data-id="<%=d.id%>"></p>
 					<% else %>
-						<p class='fa fa-heart faverite' value="<%=d.id%>"></p>
+						<p class='fa fa-heart-o faverite' data-id="<%=d.id%>"></p>
 					<% end %>
 
 					<% if d.user == current_user %>
@@ -112,17 +111,17 @@
 </script>
 <script type="text/javascript">
 
-$(".faverite").click(function() {
-	var id=$(this).attr('value');
+$(".faverite").on("click",function() {
+	var id=$(this).data('id')
  	$.post( "/dishes/" + id + "/faverite" )
 	 	.done(function( data ) {
-
-	    if(data.status=="faverite"){
-	    	$(this).parents('.faverite').removeClass('fa-heart-o');
-	    	$(this).closest('.faverite').addClass('fa-heart');
+	 		console.log(data);
+	    if(data.status=="unfaverite"){
+	    	$("p[data-id='"+id+"']").removeClass('fa-heart');
+	    	$("p[data-id='"+id+"']").addClass('fa-heart-o');
 	    }else{
-	    	$(this).closest('.faverite').removeClass('fa-heart');
-	    	$(this).closest('.faverite').addClass('fa-heart-o');
+	    	$("p[data-id='"+id+"']").removeClass('fa-heart-o');
+	    	$("p[data-id='"+id+"']").addClass('fa-heart');
 	    }
 	  });
 });

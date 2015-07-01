@@ -85,7 +85,7 @@
 						bitter:<%=c.bitter%>
 						spicy:<%=c.spicy%>
 						salt:<%=c.salt%>
-						<% if current_user==c%>
+						<% if current_user.id==c.user_id%>
 						<%= link_to "edit",dish_comments_path(@dish,:id=>c.id) %>
 						<%#= link_to "destroy",dish_comment_path(@dish,c),:method=>'delete',:class=>"delete" %>
 						<a href="?dish_id=<%=@dish.id%>&id=<%=c.id%>" class="comment-delete">destroy</a>
