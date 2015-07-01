@@ -7,7 +7,7 @@ class DishesController < ApplicationController
 
 	#GET /dishes/
 	def index
-		@dishes = @dishes.where(:status=>2)
+		@dishes = @dishes.where(:status=>:posted)
 
 		if current_user && params[:id]
 			get_dish
@@ -23,7 +23,7 @@ class DishesController < ApplicationController
 
 	#GET /dishes/draft
 	def draft
-		@dishes= current_user.dishes.where(:status=>1)
+		@dishes= current_user.dishes.page(params[:page]).per(10).where(:status=>:draft)
 		render :action=>:index
 	end
 
@@ -74,7 +74,7 @@ class DishesController < ApplicationController
 	end
 
 	def get_dish
-		@dish = current_user.dishs.find(params[:id])
+		@dish = current_user.dishes.find(params[:id])
 	end
 
 	def get_dishs

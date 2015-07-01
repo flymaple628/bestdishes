@@ -6,9 +6,9 @@ class User < ActiveRecord::Base
   devise :omniauthable, :omniauth_providers => [:facebook]
 
   has_many :comments
-
+  has_many :dishes
   has_many :user_dishships, :dependent => :destroy
-	has_many :dishes ,:through=>:user_dishships,:source=>:dish
+	has_many :faverites ,:through=>:user_dishships,:source=>:dish
 
 	def self.from_omniauth(auth)
 	  where(provider: auth.provider, uid: auth.uid).first_or_create do |user|

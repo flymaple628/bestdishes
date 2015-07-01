@@ -85,9 +85,11 @@
 						bitter:<%=c.bitter%>
 						spicy:<%=c.spicy%>
 						salt:<%=c.salt%>
+						<% if current_user==c%>
 						<%= link_to "edit",dish_comments_path(@dish,:id=>c.id) %>
 						<%#= link_to "destroy",dish_comment_path(@dish,c),:method=>'delete',:class=>"delete" %>
-						<a href="?dish_id=<%=@dish.id%>&id=<%=c.id%>">destroy</a>
+						<a href="?dish_id=<%=@dish.id%>&id=<%=c.id%>" class="comment-delete">destroy</a>
+						<% end %>
 					</div>
 				</div>
 				<div class="row">
@@ -108,7 +110,7 @@
 </div>
 <script type="text/javascript">
 
-	$("a").click(function(e) {
+	$(".comment-delete").click(function(e) {
 		  var strUrl = $(this).attr('href');
 		  var getPara, ParaVal;
 		  var aryPara = [];
