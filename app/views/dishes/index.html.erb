@@ -113,7 +113,7 @@
 
 $(".faverite").click(function() {
 	var id=$(this).attr('value');
- 	$.get( "/dishes/faverite/", { dish_id: id } )
+ 	$.post( "/dishes/faverite/", { dish_id: id } )
 	 	.done(function( data ) {
 	 		console.log()
 
