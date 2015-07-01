@@ -1,21 +1,22 @@
 Rails.application.routes.draw do
 
-  devise_for :admins
+  devise_for :admins # TODO: remove admin
   devise_for :users , :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
 
+  resources :profiles
+
   resources :dishes do
-    resources :comments,:controller=>'dish_comments'
+    resources :comments, :controller => 'dish_comments'
+
     collection do
         get :faverite_list
-        post :faverite
-
         get :draft
     end
+
     member do
-        get :faverite_list
+      post :faverite
     end
   end
-
 
   namespace :admin do
     resources :tags
@@ -27,11 +28,10 @@ Rails.application.routes.draw do
 
     end
   end
+
   #home controllers
   get 'about' =>'homes#about'
-  get 'profile/:id' =>'homes#profile'
 
-  patch 'profile/:id' =>'homes#profile_edit'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -1,40 +1,36 @@
 class DishesController < ApplicationController
-	before_action :dish_one,:only=>[:update,:destroy]
-	before_action :dish_all,:only=>[:index,:update,:draft]
+
+	before_action :authenticate_user!, :except => [:index]
+
+	before_action :get_dish, :only=>[:update,:destroy]
+	before_action :get_dishs, :only=>[:index,:update,:draft]
 
 	#GET /dishes/
 	def index
-		@dishes=@dishes.where(:status=>2)
+		@dishes = @dishes.where(:status=>2)
 
-		if current_user
-			if params[:id]
-				dish_one
-			else
-				@dish=Dish.new
-			end
+		if current_user && params[:id]
+			get_dish
+		else
+			@dish = Dish.new
 		end
 	end
-
 
 	#GET /dishes/faverite_list
 	def faverite_list
-		if params[:id]
-			user_id=params[:id]
-		else
-			user_id=current_user.id
-		end
-		@user=User.find(user_id)
-		@dishes=@user.dishes
+		@dishes = current_user.dishes
 	end
+
 	#GET /dishes/draft
 	def draft
-		@dishes=@dishes.where(:status=>1,:user_id=>current_user.id)
+		@dishes= current_user.dishes.where(:status=>1)
 		render :action=>:index
 	end
 
 	#POST /dishes/
 	def create
-		@dish=Dish.new(dish_params.merge(:user_id => current_user.id))
+		@dish=Dish.new(dish_params)
+		@dish.user = current_user
 
 		if @dish.save
 			redirect_to dishes_path
@@ -48,8 +44,9 @@ class DishesController < ApplicationController
 		if params[:_remove_reailpic]=='1'
 			@dish.realpic=nil
 		end
+
 		if @dish.update(dish_params)
-			redirect_to dishes_path(:id=>@dish.id)
+			redirect_to dishes_path
 		else
 			render :action=>:index
 		end
@@ -62,36 +59,31 @@ class DishesController < ApplicationController
 
 	#POST /dishes/faverite
 	def faverite
-		if UserDishship.exists?(:dish_id=>params[:dish_id],:user_id=>current_user.id)
-			@dish=UserDishship.where(:dish_id=>params[:dish_id],:user_id=>current_user.id)
-			@dish.delete_all
+		ship = current_user.user_dishships.find_by_dish_id( params[:id] )
+
+		if ship
+			ship.destroy
 			render json:{ "status": 'unfaverite'}
 
 		else
-			@dish=UserDishship.new(:dish_id=>params[:dish_id],:user_id=>current_user.id)
+			@dish = current_user.user_dishships.new( :dish_id => params[:id] )
 			@dish.save
 			render json:{ "status": 'faverite'}
 		end
 
-		#redirect_to(:back)
 	end
-	def dish_one
-		if current_user or current_admin
-			@dish=Dish.find_by_id(params[:id])
-		end
+
+	def get_dish
+		@dish = current_user.dishs.find(params[:id])
 	end
-	def dish_all
 
-		@dishes=Dish.joins("LEFT JOIN comments ON dishes.id=comments.dish_id").select("dishes.*,count(comments.id) as comment_count,max(comments.updated_at) as comment_updated").group("dishes.id")
+	def get_dishs
+		@dishes = Dish.all
 
-		if ['name','price','comment_countd','comment_updated'].include?params[:order]
-			if params[:order]=='comment_countd'
-				sort_by=params[:order]+' desc'
-			else
-				sort_by=params[:order]
-			end
+		if ['name','price','comments_count','last_commented_at'].include?( params[:order] )
+			sort_by = "#{params[:order]} DESC"
 		else
-			sort_by=:id
+			sort_by = "id DESC"
 		end
 
 		@dishes=@dishes.order(sort_by)

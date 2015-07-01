@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150630122830) do
+ActiveRecord::Schema.define(version: 20150701035704) do
 
   create_table "addresses", force: :cascade do |t|
     t.integer  "restaurant_id"
@@ -72,18 +72,20 @@ ActiveRecord::Schema.define(version: 20150630122830) do
   create_table "dishes", force: :cascade do |t|
     t.integer  "restaurant_id"
     t.integer  "price"
-    t.integer  "viewed"
+    t.integer  "viewed",               default: 0
     t.integer  "user_id"
     t.string   "short_des"
     t.string   "name"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
     t.string   "status"
     t.string   "avatar"
     t.string   "realpic_file_name"
     t.string   "realpic_content_type"
     t.integer  "realpic_file_size"
     t.datetime "realpic_updated_at"
+    t.integer  "comments_count",       default: 0
+    t.datetime "last_commented_at"
   end
 
   add_index "dishes", ["user_id"], name: "index_dishes_on_user_id"

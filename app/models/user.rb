@@ -5,7 +5,9 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
   devise :omniauthable, :omniauth_providers => [:facebook]
 
-  has_many :user_dishships
+  has_many :comments
+
+  has_many :user_dishships, :dependent => :destroy
 	has_many :dishes ,:through=>:user_dishships,:source=>:dish
 
 	def self.from_omniauth(auth)

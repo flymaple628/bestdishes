@@ -1,3 +1,6 @@
 class Comment < ActiveRecord::Base
-	belongs_to :dish
+
+	belongs_to :user
+	belongs_to :dish, :counter_cache => true
+
 end

@@ -9,13 +9,13 @@
 </div>
 <div class="row">
 	<div class="col-md-12">
-		<% if current_user and @user.id==current_user.id%>
-		<%=form_for @user, :url=>"#{@user.id}",:method=>'patch',:action=>'profile_edit' do |f| %>
-		<%=f.text_area :description%>
-		<%=f.submit%>
-		<% end %>
+		<% if @user == current_user %>
+			<%= form_for @user, :url => profile_path(@user) do |f| %>
+				<%=f.text_area :description%>
+				<%=f.submit%>
+			<% end %>
 		<% else %>
-		<%=@user.description%>
+			<%=@user.description%>
 		<% end %>
 	</div>
 </div>

@@ -10,7 +10,7 @@
 			<%=link_to "name" , dishes_path(:order=>:name)%>
 			<%=link_to "price" , dishes_path(:order=>:price)%>
 			<%=link_to "viewed" , dishes_path(:order=>:viewed)%>
-			<%=link_to "comment" , dishes_path(:order=>:comment_count)%>
+			<%=link_to "comment" , dishes_path(:order=>:comments_count)%>
 			<%=link_to "last_comment" , dishes_path(:order=>:comment_updated)%>
 		</div>
 	</div>
@@ -19,26 +19,27 @@
 		<div class="menu-item">
 			<div class="row">
 				<div class="col-md-6">
-					<%=link_to "#{d.name}" ,dish_comments_path(d)%>
+					<%=link_to d.name, dish_comments_path(d)%>
 				</div>
 				<div class="col-md-2">
 					$<%=d.price%>
 				</div>
 				<div class="col-md-4">
-				<span class="fa fa-comment"><%=d.comment_count%></span>
+				<span class="fa fa-comment"><%=d.comments_count%></span>
 				<span class="fa fa-eye"><%=d.viewed%></span>
 
 				<% if current_user %>
-					<% if d.user_dishships.empty?%>
+
+					<% if current_user.user_dishships.exists?( :dish => d ) %>
 						<p class='fa fa-heart-o faverite' value="<%=d.id%>"></p>
 					<% else %>
 						<p class='fa fa-heart faverite' value="<%=d.id%>"></p>
 					<% end %>
-				<% if current_user and d.user_id==current_user.id%>
-					<%=link_to '',dishes_path(:id=>d.id),:class=>'fa fa-pencil' %>
-					<% end %>
-					<% if (current_user and d.user_id==current_user.id) or admin_signed_in?%>
-					<%=link_to '',dish_path(:id=>d.id),:method=>'delete',:class=>'fa fa-trash' %>
+
+					<% if d.user == current_user %>
+						<%=link_to '',dishes_path(:id=>d.id),:class=>'fa fa-pencil' %>
+
+						<%=link_to '',dish_path(d),:method=>'delete',:class=>'fa fa-trash' %>
 					<% end %>
 				<% end %>
 				<%=localize(d.updated_at,:format => '%Y/%m/%d')%>
@@ -56,46 +57,46 @@
 	<div class="col-md-12 text-center"><%= paginate @dishes %></div>
 </div>
 <div class="dish-form">
-	<% unless @dish.nil? %>
-	<%=form_for @dish do |f|%>
-	<div class="row form-group" >
-		<div class="col-md-4"><%=f.label :name%></div>
-		<div class="col-md-8"><%=f.text_field :name,:class=>"form-control"%></div>
-	</div>
-	<div class="row ">
-		<div class="col-md-4"><%=f.label :price%></div>
-		<div class="col-md-8"><%=f.number_field :price,:class=>"form-control"%></div>
-	</div>
-	<div class="row">
-		<div class="col-md-4"><%=f.label :status%></div>
-		<div class="col-md-8">
-			<div class="btn-group">
-				<%= select(:dish, :status, [ ['posted', 2],['draft', 1]],{},{:class => 'form-control'}) %>
+	<% if @dish %>
+		<%=form_for @dish do |f|%>
+		<div class="row form-group" >
+			<div class="col-md-4"><%=f.label :name%></div>
+			<div class="col-md-8"><%=f.text_field :name,:class=>"form-control"%></div>
+		</div>
+		<div class="row ">
+			<div class="col-md-4"><%=f.label :price%></div>
+			<div class="col-md-8"><%=f.number_field :price,:class=>"form-control"%></div>
+		</div>
+		<div class="row">
+			<div class="col-md-4"><%=f.label :status%></div>
+			<div class="col-md-8">
+				<div class="btn-group">
+					<%= select(:dish, :status, [ ['posted', 2],['draft', 1]],{},{:class => 'form-control'}) %>
+				</div>
 			</div>
 		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-4"><%=f.label :tag_id%></div>
-		<div class="col-md-8">
-			<%=f.collection_check_boxes(:tag_ids, Tag.all, :id, :name,{:class=>'checkbox-inline'},{:class=>'checkbox_inline'})%>
+		<div class="row">
+			<div class="col-md-4"><%=f.label :tag_ids %></div>
+			<div class="col-md-8">
+				<%=f.collection_check_boxes(:tag_ids, Tag.all, :id, :name,{:class=>'checkbox-inline'},{:class=>'checkbox_inline'})%>
+			</div>
 		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-4"><%=f.label :tag_id%></div>
-		<div class="col-md-8"><%= f.file_field :realpic %>
-			<% if @dish.realpic.exists?%>
-			<%=check_box_tag "_remove_reailpic","1"%>刪除照片</div>
-			<% end %>
-	</div>
-	<div class="row">
-		<div class="col-md-4"><%=f.label :short_des%></div>
-		<div class="col-md-8"><%=f.text_area :short_des,:class=>'form-control'%></div>
-	</div>
-	<div class="row">
-		<div class="col-md-6"><%=f.submit :submit,:class=>'btn btn-primary text-center'%></div>
-	</div>
+		<div class="row">
+			<div class="col-md-4"><%=f.label :tag_id%></div>
+			<div class="col-md-8"><%= f.file_field :realpic %>
+				<% if @dish.realpic.exists?%>
+					<%=check_box_tag "_remove_reailpic","1"%>刪除照片</div>
+				<% end %>
+		</div>
+		<div class="row">
+			<div class="col-md-4"><%=f.label :short_des%></div>
+			<div class="col-md-8"><%=f.text_area :short_des,:class=>'form-control'%></div>
+		</div>
+		<div class="row">
+			<div class="col-md-6"><%=f.submit :submit,:class=>'btn btn-primary text-center'%></div>
+		</div>
 
-	<% end %>
+		<% end %>
 	<% end %>
 </div><!--dish-form-->
 <!--form-->
@@ -113,9 +114,8 @@
 
 $(".faverite").click(function() {
 	var id=$(this).attr('value');
- 	$.post( "/dishes/faverite/", { dish_id: id } )
+ 	$.post( "/dishes/" + id + "/faverite" )
 	 	.done(function( data ) {
-	 		console.log()
 
 	    if(data.status=="faverite"){
 	    	$(this).parents('.faverite').removeClass('fa-heart-o');

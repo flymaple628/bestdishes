@@ -44,8 +44,8 @@
 		<%=link_to "name" , admin_dishes_path(:order=>:name)%>
 		<%=link_to "price" , admin_dishes_path(:order=>:price)%>
 		<%=link_to "viewed" , admin_dishes_path(:order=>:viewed)%>
-		<%=link_to "comment" , admin_dishes_path(:order=>:comment_count)%>
-		<%=link_to "last_commet" , admin_dishes_path(:order=>:comment_updated)%>
+		<%=link_to "comment" , admin_dishes_path(:order=>:comments_count)%>
+		<%=link_to "last_commet" , admin_dishes_path(:order=>:last_commented_at)%>
 	</div>
 </div>
 <% @dishes.each do |f| %>
@@ -54,7 +54,7 @@
 	<div class="col-md-4">
 	$<%=f.price%>
 	viewed:<%=f.viewed%>
-	Count:<%=f.comment_count%>
+	Count:<%=f.comments_count%>
 
 	<%#=link_to 'faverite',admin_faverite_dishes_path(:dish_id=>f.id),:method=>'post' %>
 	<%=link_to 'edit',admin_dishes_path(:id=>f.id) %>

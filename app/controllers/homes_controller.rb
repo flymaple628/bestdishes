@@ -1,4 +1,5 @@
 class HomesController < ApplicationController
+
 	def index
 
 	end
@@ -9,29 +10,4 @@ class HomesController < ApplicationController
 		@comments=Comment.count
 	end
 
-	def profile
-	 #params[:id]=2
-
-		if User.exists?(:id=>params[:id])
-			@user=User.find(params[:id])
-		else
-			flash[:alert] = "user not exeist"
-
-			redirect_to '/about'
-		end
-		@dishes=Dish.where(user_id:params[:id])
-		@comments=Comment.where(user_id:params[:id])
-		#@comments=@dishes.comm.where(user_id:params[:id])
-
-	end
-
-	def profile_edit
-		@user=User.find(params[:id])
-		@user.update(user_params)
-		redirect_to "/profile/#{params[:id]}"
-	end
-
-	def user_params
-		params.require(:user).permit(:description)
-	end
 end

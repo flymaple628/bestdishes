@@ -1,34 +1,35 @@
 class DishCommentsController < ApplicationController
+
+	before_action :authenticate_user!
+
 	before_action :dish_one
-	before_action :comment_all,:only=>[:index,:create,:update]
-	before_action :comment_one,:only=>[:update,:delete]
+	before_action :comment_all,:only=>[:index]
+	before_action :get_my_comment,:only=>[:update,:destroy]
+
 	#GET /dishes/:id/comments/
 	def index
+		@dish.increment!(:viewed)
 
-		if @dish.viewed.nil?
-			@dish.viewed=1
+		if current_user && params[:id]
+			@comment = current_user.comments.find(params[:id])
 		else
-			@dish.viewed+=1
-		end
-		@dish.update_attributes(:viewed=>@dish.viewed)
-
-		if current_user
-			if params[:id]
-				@comment=Comment.find(params[:id])
-			else
-				@comment=Comment.new
-			end
+			@comment = Comment.new
 		end
 
 	end
 
-
 	#POST /dishes/:id/comments/
 	def create
-		@comment=@dish.comments.build(comment_params.merge(:user_id => current_user.id))
+		@comment=@dish.comments.build(comment_params)
+		@comment.user = current_user
+
 		if @comment.save
-			redirect_to dish_comments_path
+
+			@comment.dish.touch(:last_commented_at)
+
+			redirect_to dish_comments_path(@dish)
 		else
+			comment_all
 			render :action=>:index
 		end
 	end
@@ -36,28 +37,32 @@ class DishCommentsController < ApplicationController
 	#PATCH /dishes/:dish_id/comments/:id
 	def update
 		if @comment.update(comment_params)
-			redirect_to dish_comments_path(:id=>@comment.id)
+			redirect_to dish_comments_path(@dish)
 		else
+			comment_all
 			render :action=>:index
 		end
 	end
 
 	def destroy
-		@dish.comments.find(params[:id]).destroy
-		#render :html=>@dish.comments.inspect
+		@comment.destroy
+
 		redirect_to :back
 	end
+
+	protected
 
 	def dish_one
 		@dish=Dish.find(params[:dish_id])
 	end
 
-	def comment_one
-		@comment=Comment.find(params[:id])
+	def get_my_comment
+		@comment = current_user.comments.find(params[:id])
 	end
 
 	def comment_all
-		@comments=Comment.where(dish_id: params[:dish_id])
+		@comments= @dish.comments
+
 		case params[:order]
 		when 'tasted'
 			sort_by='tasted desc'
