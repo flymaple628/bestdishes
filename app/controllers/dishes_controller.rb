@@ -58,7 +58,11 @@ class DishesController < ApplicationController
 	#delete /dishes/:id
 	def destroy
 		@dish.destroy
-		redirect_to dishes_path
+		respond_to do |format|
+			format.html {redirect_to dishes_path}
+			format.js {render :text=>("$('#main-list#{params[:id]}').html('');")}
+		end
+
 	end
 
 	#POST /dishes/faverite

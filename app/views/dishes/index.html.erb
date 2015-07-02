@@ -15,7 +15,7 @@
 		</div>
 	</div>
 	<% @dishes.each do |d| %>
-	<div class="main-list">
+	<div class="main-list" id="main-list<%=d.id%>" >
 		<div class="menu-item">
 			<div class="row">
 				<div class="col-md-6">
@@ -38,7 +38,7 @@
 					<% if d.user == current_user %>
 						<%=link_to '',dishes_path(:id=>d.id),:class=>'fa fa-pencil' %>
 
-						<%=link_to '',dish_path(d),:method=>'delete',:class=>'fa fa-trash' %>
+						<%=link_to '',dish_path(d),:method=>'delete',:class=>'fa fa-trash',:remote=>true %>
 					<% end %>
 				<% end %>
 				<%=localize(d.updated_at,:format => '%Y/%m/%d')%>
