@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150701035704) do
+ActiveRecord::Schema.define(version: 20150702091525) do
 
   create_table "addresses", force: :cascade do |t|
     t.integer  "restaurant_id"
@@ -129,6 +129,8 @@ ActiveRecord::Schema.define(version: 20150701035704) do
     t.string   "description"
     t.string   "provider"
     t.string   "uid"
+    t.string   "fb_uid"
+    t.string   "fb_token"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
