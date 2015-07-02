@@ -46,8 +46,11 @@ class DishCommentsController < ApplicationController
 
 	def destroy
 		@comment.destroy
+		respond_to do |format|
+		  format.html {redirect_to :back}
+		  format.js {render :text =>"$('#item-list#{params[:id]}').html('');"}
+		end
 
-		redirect_to :back
 	end
 
 	protected
