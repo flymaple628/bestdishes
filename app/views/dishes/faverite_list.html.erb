@@ -4,7 +4,11 @@
 </div>
 <% @dishes.each do |d|%>
 <div class="row">
-	<div class="col-md-2"><%=link_to '',method,faverite_dish_path(d),:method=>'post',:class=>'fa fa-heart-o' %></div>
+	<div class="col-md-2">
+	<% if current_user.id==d.user_id%>
+	<%=link_to '',faverite_dish_path(d),:method=>'post',:class=>'fa fa-heart-o' %>
+	<% end %>
+	</div>
 	<div class="col-md-2"><%=d.name%></div>
 	<div class="col-md-8"><%=d.short_des%></div>
 

@@ -18,7 +18,11 @@ class DishesController < ApplicationController
 
 	#GET /dishes/faverite_list
 	def faverite_list
-		@dishes = current_user.dishes
+		if params[:id]
+			@dishes = User.find(params[:id]).faverites
+		else
+			@dishes = current_user.faverites
+		end
 	end
 
 	#GET /dishes/draft

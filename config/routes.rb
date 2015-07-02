@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     resources :comments, :controller => 'dish_comments'
 
     collection do
-        get :faverite_list
+        #get :faverite_list
         get :draft
     end
 
@@ -31,6 +31,8 @@ Rails.application.routes.draw do
   #home controllers
   get 'about' =>'homes#about'
 
+
+  get 'faverite_list/:id'=>'dishes#faverite_list', :as=>:faverite_list
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
