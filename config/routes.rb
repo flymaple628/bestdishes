@@ -2,7 +2,13 @@ Rails.application.routes.draw do
 
   devise_for :users , :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
 
-  resources :profiles
+  resources :profiles do
+
+    member do
+      get :like_list
+      get :faverite_list
+    end
+  end
 
   resources :dishes do
     resources :comments, :controller => 'dish_comments'

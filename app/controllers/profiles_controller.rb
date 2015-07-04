@@ -15,7 +15,15 @@ class ProfilesController < ApplicationController
 
 		redirect_to profile_path(@user)
 	end
+	#GET /profile/:id/like_list
+	def like_list
+		@dishes=current_user.likes(params[:id])
+	end
 
+	#GET /profile/:id/faverite_list
+	def faverite_list
+			@dishes = current_user.faverites(params[:id])
+	end
 	protected
 
 	def user_params
