@@ -95,7 +95,11 @@ class DishesController < ApplicationController
 			@dish.save
 			#render json:{ "status": 'faverite'}
 		end
-
+		if DishLike.exists?(:dish_id=>params[:id])
+			@dish_count=DishLike.where(:dish_id=>params[:id]).count
+		else
+			@dish_count=0
+		end
 		respond_to do |format|
 			format.html {redirect_to :back}
 			format.js

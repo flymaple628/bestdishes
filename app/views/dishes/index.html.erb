@@ -39,6 +39,7 @@
 					<% else %>
 						<%=link_to "" ,like_dish_path(d),:remote=>:true  ,:class=>'fa fa-thumbs-down like',:data=>{:like=>d.id}  %>
 					<% end %><%#end like%>
+					<span data-likeNum="<%=d.id%>"><%=d.dish_likes.count()%></span>
 					<% if d.user == current_user %>
 						<%=link_to '',dishes_path(:id=>d.id),:class=>'fa fa-pencil' %>
 
