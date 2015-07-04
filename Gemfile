@@ -18,6 +18,10 @@ gem 'kaminari'
 #rigister
 gem 'devise'
 
+gem 'bootstrap-datepicker-rails'
+
+gem 'jquery-ui-sass-rails'
+
 gem 'omniauth-facebook'
 
 gem 'bootstrap-sass', '~> 3.3.4'

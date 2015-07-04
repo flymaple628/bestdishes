@@ -100,9 +100,14 @@
 					<%=check_box_tag "_remove_reailpic","1"%>刪除照片</div>
 				<% end %>
 		</div>
+
 		<div class="row">
 			<div class="col-md-4"><%=f.label :short_des%></div>
 			<div class="col-md-8"><%=f.text_area :short_des,:class=>'form-control'%></div>
+		</div>
+		<div class="row form-group" >
+			<div class="col-md-4"><%=f.label :book_time%></div>
+			<div class="col-md-8"><%=f.text_field :book_time,:class=>"form-control datepicker"%></div>
 		</div>
 		<div class="row">
 			<div class="col-md-6"><%=f.submit :submit,:class=>'btn btn-primary text-center'%></div>
@@ -122,6 +127,7 @@
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
 </script>
+
 <script type="text/javascript">
 
 $(".faverite").on("click",function() {
@@ -138,5 +144,5 @@ $(".faverite").on("click",function() {
 	    }
 	  });
 });
-
+$(".datepicker").datepicker({ format: 'yyyy-mm-dd' });
 </script>

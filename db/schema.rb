@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150704125031) do
+ActiveRecord::Schema.define(version: 20150704153930) do
 
   create_table "addresses", force: :cascade do |t|
     t.integer  "restaurant_id"
@@ -97,6 +97,7 @@ ActiveRecord::Schema.define(version: 20150704125031) do
     t.integer  "comments_count",       default: 0
     t.datetime "last_commented_at"
     t.integer  "like_count",           default: 0
+    t.datetime "book_time"
   end
 
   add_index "dishes", ["user_id"], name: "index_dishes_on_user_id"

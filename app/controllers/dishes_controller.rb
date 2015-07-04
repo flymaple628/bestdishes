@@ -115,13 +115,13 @@ class DishesController < ApplicationController
 		if Tag.select(:id).include?params[:tag]
 			@dishes=@dishes.joins(:dish_tagsships).where("tag_id=#{params[:tag]}")
 		end
-
+		@dishes=@dishes.where("book_time <='#{DateTime.current().beginning_of_day()}'")
 		@dishes=@dishes.order(sort_by)
 		@dishes=@dishes.page(params[:page]).per(10)
 	end
 
 	def dish_params
-		params.require(:dish).permit(:name,:price,:short_des,:user_id,:status,:realpic,:tag_name,:tag_ids=>[])
+		params.require(:dish).permit(:name,:price,:short_des,:user_id,:status,:realpic,:tag_name,:book_time,:tag_ids=>[])
 	end
 
 end

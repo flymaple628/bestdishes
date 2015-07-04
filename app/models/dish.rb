@@ -1,4 +1,5 @@
 class Dish < ActiveRecord::Base
+  before_save :default_values
 
 	belongs_to :user
 	belongs_to :restaurant
@@ -28,5 +29,10 @@ class Dish < ActiveRecord::Base
   		tag.id
   	end
   	self.tag_ids=ids
+  end
+
+
+  def default_values
+    self.book_time ||= DateTime.current().beginning_of_day()
   end
 end
