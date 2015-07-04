@@ -1,0 +1,7 @@
+<% if @ship %>
+$("a[data-like='<%=params[:id]%>']").removeClass('fa-thumbs-up');
+$("a[data-like='<%=params[:id]%>']").addClass('fa-thumbs-down');
+<% else %>
+$("a[data-like='<%=params[:id]%>']").removeClass('fa-thumbs-down');
+$("a[data-like='<%=params[:id]%>']").addClass('fa-thumbs-up');
+<% end %>

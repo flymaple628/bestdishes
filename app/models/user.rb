@@ -8,7 +8,10 @@ class User < ActiveRecord::Base
   has_many :comments
   has_many :dishes
   has_many :user_dishships, :dependent => :destroy
-	has_many :faverites ,:through=>:user_dishships,:source=>:dish
+  has_many :faverites ,:through=>:user_dishships,:source=>:dish
+
+  has_many :dish_likes, :dependent => :destroy
+	has_many :likes ,:through=>:dish_likes,:source=>:dish
 
 # 	def self.from_omniauth(auth)
 # 	  where(provider: auth.provider, uid: auth.uid).first_or_create do |user|

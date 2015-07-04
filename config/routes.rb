@@ -14,6 +14,7 @@ Rails.application.routes.draw do
 
     member do
       post :faverite
+      get :like
     end
   end
 

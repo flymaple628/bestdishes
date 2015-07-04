@@ -80,7 +80,28 @@ class DishesController < ApplicationController
 		end
 
 	end
+	#POST /dishes/:id/like
+	def like
+		@ship = current_user.dish_likes.find_by_dish_id( params[:id] )
+		@dish=Dish.find(params[:id])
+		if @ship
+			@ship.destroy
+			@dish.like_count-=1
+			#render json:{ "status": 'unfaverite'}
 
+		else
+			@dish.like_count+=1
+			@dish = current_user.dish_likes.new( :dish_id => params[:id] )
+			@dish.save
+			#render json:{ "status": 'faverite'}
+		end
+
+		respond_to do |format|
+			format.html {redirect_to :back}
+			format.js
+
+		end
+	end
 	def get_dish
 		@dish = current_user.dishes.find(params[:id])
 	end

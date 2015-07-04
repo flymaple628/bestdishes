@@ -34,7 +34,11 @@
 					<% else %>
 						<p class='fa fa-heart-o faverite' data-id="<%=d.id%>"></p>
 					<% end %>
-
+					<% if current_user.dish_likes.exists?( :dish => d ) %>
+						<%=link_to "" ,like_dish_path(d),:remote=>:true ,:class=>'fa fa-thumbs-up like',:data=>{:like=>d.id} %>
+					<% else %>
+						<%=link_to "" ,like_dish_path(d),:remote=>:true  ,:class=>'fa fa-thumbs-down like',:data=>{:like=>d.id}  %>
+					<% end %><%#end like%>
 					<% if d.user == current_user %>
 						<%=link_to '',dishes_path(:id=>d.id),:class=>'fa fa-pencil' %>
 

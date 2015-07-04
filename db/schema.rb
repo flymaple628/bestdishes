@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150702091525) do
+ActiveRecord::Schema.define(version: 20150703080233) do
 
   create_table "addresses", force: :cascade do |t|
     t.integer  "restaurant_id"
@@ -59,6 +59,16 @@ ActiveRecord::Schema.define(version: 20150702091525) do
   add_index "comments", ["dish_id"], name: "index_comments_on_dish_id"
   add_index "comments", ["user_id"], name: "index_comments_on_user_id"
 
+  create_table "dish_likes", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "dish_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "dish_likes", ["dish_id"], name: "index_dish_likes_on_dish_id"
+  add_index "dish_likes", ["user_id"], name: "index_dish_likes_on_user_id"
+
   create_table "dish_tagsships", force: :cascade do |t|
     t.integer  "tag_id"
     t.integer  "dish_id"
@@ -86,9 +96,20 @@ ActiveRecord::Schema.define(version: 20150702091525) do
     t.datetime "realpic_updated_at"
     t.integer  "comments_count",       default: 0
     t.datetime "last_commented_at"
+    t.integer  "like_count",           default: 0
   end
 
   add_index "dishes", ["user_id"], name: "index_dishes_on_user_id"
+
+  create_table "post_likes", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "dish_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "post_likes", ["dish_id"], name: "index_post_likes_on_dish_id"
+  add_index "post_likes", ["user_id"], name: "index_post_likes_on_user_id"
 
   create_table "restaurants", force: :cascade do |t|
     t.string   "name"
