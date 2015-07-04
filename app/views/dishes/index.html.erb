@@ -14,6 +14,13 @@
 			<%=link_to "last_comment" , dishes_path(:order=>:comment_updated)%>
 		</div>
 	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<% Tag.joins(:dish_tagsships).where("dish_id is not null").uniq.each do |t|%>
+				<%=link_to t.name,dishes_path(:tag=>t.id)%>
+			<% end %>
+		</div>
+	</div>
 	<% @dishes.each do |d| %>
 	<div class="main-list" id="main-list<%=d.id%>" >
 		<div class="menu-item">
@@ -80,13 +87,14 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-4"><%=f.label :tag_ids %></div>
+			<div class="col-md-4"><%=f.label :tag_name %></div>
 			<div class="col-md-8">
-				<%=f.collection_check_boxes(:tag_ids, Tag.all, :id, :name,{:class=>'checkbox-inline'},{:class=>'checkbox_inline'})%>
+				<%#=f.collection_check_boxes(:tag_ids, Tag.all, :id, :name,{:class=>'checkbox-inline'},{:class=>'checkbox_inline'})%>
+				<%=f.text_field(:tag_name )	%>
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-4"><%=f.label :tag_id%></div>
+			<div class="col-md-4"><%=f.label :realpic%></div>
 			<div class="col-md-8"><%= f.file_field :realpic %>
 				<% if @dish.realpic.exists?%>
 					<%=check_box_tag "_remove_reailpic","1"%>刪除照片</div>

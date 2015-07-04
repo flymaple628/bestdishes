@@ -16,14 +16,7 @@ class DishesController < ApplicationController
 		end
 	end
 
-	#GET /dishes/faverite_list
-	def faverite_list
-		if params[:id]
-			@dishes = User.find(params[:id]).faverites
-		else
-			@dishes = current_user.faverites
-		end
-	end
+
 
 	#GET /dishes/draft
 	def draft
@@ -119,12 +112,16 @@ class DishesController < ApplicationController
 			sort_by = "id DESC"
 		end
 
+		if Tag.select(:id).include?params[:tag]
+			@dishes=@dishes.joins(:dish_tagsships).where("tag_id=#{params[:tag]}")
+		end
+
 		@dishes=@dishes.order(sort_by)
 		@dishes=@dishes.page(params[:page]).per(10)
 	end
 
 	def dish_params
-		params.require(:dish).permit(:name,:price,:short_des,:user_id,:status,:realpic,:tag_ids=>[])
+		params.require(:dish).permit(:name,:price,:short_des,:user_id,:status,:realpic,:tag_name,:tag_ids=>[])
 	end
 
 end

@@ -16,4 +16,17 @@ class Dish < ActiveRecord::Base
 
 	has_attached_file :realpic, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/:style/missing.png"
   validates_attachment_content_type :realpic, :content_type => /\Aimage\/.*\Z/
+
+  def tag_name
+  	self.tags.map{|t| t.name}.join(",")
+  end
+
+  def tag_name=(str)
+  	ids=str.split(",").map do |tag_name|
+  		tag_name.strip!
+  		tag=Tag.find_by_name( tag_name ) || Tag.create( :name => tag_name )
+  		tag.id
+  	end
+  	self.tag_ids=ids
+  end
 end
