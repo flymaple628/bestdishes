@@ -22,15 +22,20 @@ class DishCommentsController < ApplicationController
 	def create
 		@comment=@dish.comments.build(comment_params)
 		@comment.user = current_user
-
-		if @comment.save
-
+		state=@comment.save
+		if state
 			@comment.dish.touch(:last_commented_at)
-
-			redirect_to dish_comments_path(@dish)
-		else
-			comment_all
-			render :action=>:index
+		end
+		respond_to do |format|
+			format.html {
+				if state
+				redirect_to dish_comments_path(@dish)
+				else
+				comment_all
+				render :action=>:index
+				end
+			}
+			format.js
 		end
 	end
 

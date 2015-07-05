@@ -30,7 +30,7 @@
 		<div class="comment-form">
 		<% if current_user %>
 			<% url=(params[:id])? dish_comment_path(@dish,@comment):dish_comments_path%>
-			<%=form_for @comment,:url=>url do |f|%>
+			<%=form_for @comment,:url=>url,:remote=>true do |f|%>
 			<div class="row">
 				<div class="col-md-4">
 					<span class="comment-range">
@@ -73,32 +73,7 @@
 		<div class="comment-list">
 		<% if @comments.count>0 %>
 		<% @comments.each do |c|%>
-		<div id="item-list<%=c.id%>">
-		<div class="row">
-			<div class="col-md-2"><%=c.dish.name %></div>
-			<div class="col-md-10">
-				<div class="row">
-					<div class="col-md-12">
-						tasted:<%=c.tasted%>
-						acid:<%=c.acid%>
-						sweet:<%=c.sweet%>
-						bitter:<%=c.bitter%>
-						spicy:<%=c.spicy%>
-						salt:<%=c.salt%>
-						<% if current_user.id==c.user_id%>
-						<%= link_to "edit",dish_comments_path(@dish,:id=>c.id) %>
-						<%= link_to "destroy",dish_comment_path(@dish,c),:remote => true,:method=>'delete',:class=>"delete" %>
-						<% end %>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-12">
-						<%=c.comment%>
-					</div>
-				</div>
-			</div>
-		</div>
-		</div>
+		<%=render :partial => "comment_item", :locals => { :comment => c } %>
 		<% end %>
 		<% end %>
 		</div><!--comment-list-->

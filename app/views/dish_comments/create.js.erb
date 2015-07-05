@@ -1,0 +1,3 @@
+var html='<%= j(render :partial => "comment_item", :locals => { :comment => @comment } )%>';
+$(".comment-list").prepend(html);
+$(".comment-list>div:nth-child(n+11)").html('');
