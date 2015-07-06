@@ -9,6 +9,7 @@ class DishCommentsController < ApplicationController
 	#GET /dishes/:id/comments/
 	def index
 		@dish.increment!(:viewed)
+		@like_user=@dish.likes
 
 		if current_user && params[:id]
 			@comment = current_user.comments.find(params[:id])

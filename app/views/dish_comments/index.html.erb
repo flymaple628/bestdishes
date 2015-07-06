@@ -9,6 +9,15 @@
 	</div>
 	<div class="row">
 		<div class="col-md-12">
+			<h4>
+				<% @like_user.each do |user|%>
+				<%=user.name||user.email.split("@").first%>
+				<% end %>
+			</h4>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
 			<% if @dish.realpic.exists?%>
 				<%= image_tag(@dish.realpic.url(:medium))%>
 			<% else%>
