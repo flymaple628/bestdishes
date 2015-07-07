@@ -17,6 +17,7 @@
     <%= link_to "draft", draft_dishes_path() %> |
     <%= link_to "faverite_list",faverite_list_profile_path(current_user) %> |
     <%= link_to "like_list",like_list_profile_path(current_user) %> |
+    <%= link_to "friend_ask",box_friends_path() %> |
 
     <%= link_to('登出', destroy_user_session_path, :method => :delete) %> |
     <%= link_to('修改密碼', edit_registration_path(:user)) %>

@@ -1,0 +1,12 @@
+<% @users.each do |user|%>
+<div class="row">
+	<div class="col-md-6"><%=user.name||user.email%></div>
+	<div class="col-md-6">
+	<% if current_user.friendships.find_by_friend_id(user.id).nil?%>
+		<%= link_to "friend request", ask_friend_path(current_user,:friend_id=>user.id) %>
+	<% else %>
+		<%= link_to "remove request", remove_friend_path(current_user,:friend_id=>user.id) %>
+	<% end %>
+	</div>
+</div>
+<% end %>

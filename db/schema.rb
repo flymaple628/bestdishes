@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150704153930) do
+ActiveRecord::Schema.define(version: 20150706072905) do
 
   create_table "addresses", force: :cascade do |t|
     t.integer  "restaurant_id"
@@ -101,6 +101,33 @@ ActiveRecord::Schema.define(version: 20150704153930) do
   end
 
   add_index "dishes", ["user_id"], name: "index_dishes_on_user_id"
+
+  create_table "friend_requests", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "friend_id"
+    t.string   "accept"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "friend_requests", ["user_id"], name: "index_friend_requests_on_user_id"
+
+  create_table "friends", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "friend_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "friends", ["user_id"], name: "index_friends_on_user_id"
+
+  create_table "friendships", force: :cascade do |t|
+    t.integer  "friend_id"
+    t.integer  "user_id"
+    t.string   "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "post_likes", force: :cascade do |t|
     t.integer  "user_id"

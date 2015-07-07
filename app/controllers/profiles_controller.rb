@@ -25,6 +25,11 @@ class ProfilesController < ApplicationController
 	def faverite_list
 			@dishes = current_user.faverites(params[:id])
 	end
+
+	#GET /profile/user_list
+	def user_list
+		@users=User.all.where.not(:id=>current_user)
+	end
 	protected
 
 	def user_params

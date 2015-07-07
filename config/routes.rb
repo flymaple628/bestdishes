@@ -2,6 +2,19 @@ Rails.application.routes.draw do
 
   devise_for :users , :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
 
+
+  resources :friends do
+    collection do
+      get :box
+    end
+    member do
+      get :ask
+      get :accept
+      get :remove
+      get :reject
+
+    end
+  end
   resources :profiles do
 
     member do
@@ -38,7 +51,9 @@ Rails.application.routes.draw do
   #home controllers
   get 'about' =>'homes#about'
 
-  get 'profile/:name/'=>'profiles#show'
+
+  get 'user_list'=>'profiles#user_list'
+  #get 'profile/:name/'=>'profiles#show'
   get 'faverite_list/:id'=>'dishes#faverite_list', :as=>:faverite_list
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

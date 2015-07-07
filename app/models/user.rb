@@ -13,6 +13,8 @@ class User < ActiveRecord::Base
   has_many :dish_likes, :dependent => :destroy
 	has_many :likes ,:through=>:dish_likes,:source=>:dish
 
+  has_many :friendships
+  has_many :friends,:through=>:friendships,:source=>:user
 # 	def self.from_omniauth(auth)
 # 	  where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
 # 	    user.email = auth.info.email
@@ -61,7 +63,7 @@ class User < ActiveRecord::Base
     end
   end
 
-  def to_param
-    "#{id}-#{name}"
-  end
+  # def to_param
+  #   "#{id}-#{name}"
+  # end
 end

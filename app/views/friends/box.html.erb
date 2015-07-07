@@ -1,0 +1,9 @@
+<% @friends.each do |friend|%>
+<div class="row">
+	<div class="col-md-6"><%=friend.name||friend.email%></div>
+	<div class="col-md-6">
+		<%=link_to "accept", accept_friend_path(friend)%>
+		<%=link_to "reject",reject_friend_path(friend)%>
+	</div>
+</div>
+<% end %>
