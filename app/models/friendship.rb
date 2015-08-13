@@ -16,7 +16,7 @@ class Friendship < ActiveRecord::Base
 		logger.info "id==#{id};friend_id==#{friend_id};status==#{status}"
 		friend=self.find_by_user_id_and_friend_id(friend_id,id)
 		friend.update(:friend_id=>id,:id=>friend_id,:status=>status)
-		self.create(:user_id=>id,:friend_id=>friend_id,:status=>status)
+		self.create(:user_id=>idˇ,:friend_id=>friend_id,:status=>status)
 		# self.save()
 		#self.update(:user_id=>friend_id,:friend_id=>id,:status=>status)
 	end
